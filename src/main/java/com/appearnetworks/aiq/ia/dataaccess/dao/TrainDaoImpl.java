@@ -54,8 +54,16 @@ public class TrainDaoImpl implements TrainDao {
 
     private Train convertToTrain(TrainDO trainDO) {
         String id = trainDO.getId();
+        Long rev = trainDO.getRev();
         Long number = trainDO.getNumber();
         String type = trainDO.getTrainTypeDO().getType();
-        return new Train(id, number, type);
+
+        Train train = new Train();
+        train.setId(id);
+        train.setRev(rev);
+        train.setTrainType(type);
+        train.setNumber(number);
+
+        return train;
     }
 }

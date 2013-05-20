@@ -6,10 +6,12 @@ package com.appearnetworks.aiq.ia.dataaccess.model;
  * @author Qambber Hussain, Appear Networks.
  */
 public class TrainDO extends DataObject {
+    private Long rev;
     private Long number;
     private TrainTypeDO trainTypeDO;
 
     public TrainDO(Long number, TrainTypeDO trainTypeDO) {
+        this.rev = 1L;
         this.number = number;
         this.trainTypeDO = trainTypeDO;
     }
@@ -20,5 +22,13 @@ public class TrainDO extends DataObject {
 
     public TrainTypeDO getTrainTypeDO() {
         return trainTypeDO;
+    }
+
+    public Long getRev() {
+        return rev;
+    }
+
+    public void setRev(Long rev) {
+        this.rev = rev;
     }
 }

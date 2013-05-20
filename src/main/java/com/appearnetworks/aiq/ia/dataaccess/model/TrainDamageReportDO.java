@@ -8,6 +8,7 @@ import java.util.Date;
  * @author Qambber Hussain, Appear Networks.
  */
 public class TrainDamageReportDO extends DataObject {
+    private Long rev;
     private TrainDO train;
     private String level1;
     private String level2;
@@ -20,6 +21,18 @@ public class TrainDamageReportDO extends DataObject {
     private Date damageDateTime;
     private String damageCause;
     private String operation;
+
+    public TrainDamageReportDO() {
+        this.rev = 1L;
+    }
+
+    public Long getRev() {
+        return rev;
+    }
+
+    public void setRev(Long rev) {
+        this.rev = rev;
+    }
 
     public TrainDO getTrain() {
         return train;

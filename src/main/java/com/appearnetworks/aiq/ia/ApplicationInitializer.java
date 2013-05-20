@@ -21,15 +21,24 @@ public class ApplicationInitializer implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        trainDao.create(new Train("1", 1L, "train1"));
-        trainDao.create(new Train("2", 2L, "train2"));
-        trainDao.create(new Train("3", 3L, "train3"));
-        trainDao.create(new Train("4", 4L, "train4"));
-        trainDao.create(new Train("5", 5L, "train5"));
-        trainDao.create(new Train("6", 6L, "train6"));
-        trainDao.create(new Train("7", 7L, "train7"));
-        trainDao.create(new Train("8", 8L, "train8"));
-        trainDao.create(new Train("9", 9L, "train9"));
-        trainDao.create(new Train("10", 10L, "train10"));
+        trainDao.create(createTrain("1", 1L, "train1"));
+        trainDao.create(createTrain("2", 2L, "train2"));
+        trainDao.create(createTrain("3", 3L, "train3"));
+        trainDao.create(createTrain("4", 4L, "train4"));
+        trainDao.create(createTrain("5", 5L, "train5"));
+        trainDao.create(createTrain("6", 6L, "train6"));
+        trainDao.create(createTrain("7", 7L, "train7"));
+        trainDao.create(createTrain("8", 8L, "train8"));
+        trainDao.create(createTrain("9", 9L, "train9"));
+        trainDao.create(createTrain("10", 10L, "train10"));
+    }
+
+    private Train createTrain(String id, Long trainNumber, String trainType) {
+        Train train = new Train();
+        train.setId(id);
+        train.setNumber(trainNumber);
+        train.setTrainType(trainType);
+
+        return train;
     }
 }
