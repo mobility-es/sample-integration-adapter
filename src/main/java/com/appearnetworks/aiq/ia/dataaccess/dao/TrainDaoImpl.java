@@ -1,8 +1,10 @@
 package com.appearnetworks.aiq.ia.dataaccess.dao;
 
+import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainTypeDO;
 import com.appearnetworks.aiq.ia.rest.model.Train;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -14,25 +16,30 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class TrainDaoImpl implements TrainDao {
 
-    private static final Map<String, TrainDO> trainMap = new ConcurrentHashMap<String, TrainDO>();
+    private final Map<String, TrainDO> trainMap = new ConcurrentHashMap<String, TrainDO>();
 
     @Override
     public void create(Train train) {
-        String uuid = generateUUID();
+
         Long number = train.getNumber();
         TrainTypeDO trainTypeDO = new TrainTypeDO(train.getTrainType());
-        TrainDO trainDO = new TrainDO(uuid, number, trainTypeDO);
+        TrainDO trainDO = new TrainDO(number, trainTypeDO);
 
-        trainMap.put(uuid, trainDO);
+        trainMap.put(trainDO.getId(), trainDO);
     }
 
     @Override
-    public List<Train> getAll() {
-        return convertToTrains(trainMap.values());
+    public TrainDO find(String trainId) throws NoSuchDataObjectException {
+        if(trainMap.containsKey(trainId)) {
+            return trainMap.get(trainId);
+        } else {
+            throw new NoSuchDataObjectException("Train with id [" + trainId + " ] not found.");
+        }
     }
 
-    private String generateUUID() {
-        return UUID.randomUUID().toString();
+    @Override
+    public List<TrainDO> getAll() {
+        return (List<TrainDO>) trainMap.values();
     }
 
     private List<Train> convertToTrains(Collection<TrainDO> trainDOs) {

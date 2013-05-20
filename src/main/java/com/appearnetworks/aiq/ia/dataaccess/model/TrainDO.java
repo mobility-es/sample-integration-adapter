@@ -5,19 +5,13 @@ package com.appearnetworks.aiq.ia.dataaccess.model;
  *
  * @author Qambber Hussain, Appear Networks.
  */
-public class TrainDO {
-    private String id;
+public class TrainDO extends DataObject {
     private Long number;
     private TrainTypeDO trainTypeDO;
 
-    public TrainDO(String id, Long number, TrainTypeDO trainTypeDO) {
-        this.id = id;
+    public TrainDO(Long number, TrainTypeDO trainTypeDO) {
         this.number = number;
         this.trainTypeDO = trainTypeDO;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public Long getNumber() {

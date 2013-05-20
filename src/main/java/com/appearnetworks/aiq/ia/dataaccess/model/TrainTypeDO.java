@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class TrainTypeDO {
     private String type;
-    private List<DefectCodeDO> defectCodes;
+    private List<DamageCodeDO> defectCodes;
     private List<TrainPartDO> trainParts;
 
     public TrainTypeDO(String type) {
@@ -18,11 +18,11 @@ public class TrainTypeDO {
         return type;
     }
 
-    public List<DefectCodeDO> getDefectCodes() {
+    public List<DamageCodeDO> getDefectCodes() {
         return defectCodes;
     }
 
-    public void setDefectCodes(List<DefectCodeDO> defectCodes) {
+    public void setDefectCodes(List<DamageCodeDO> defectCodes) {
         this.defectCodes = defectCodes;
     }
 
