@@ -39,7 +39,7 @@ public class TrainDaoImpl implements TrainDao {
 
     @Override
     public List<TrainDO> getAll() {
-        return (List<TrainDO>) trainMap.values();
+        return new ArrayList<>(trainMap.values());
     }
 
     private List<Train> convertToTrains(Collection<TrainDO> trainDOs) {
