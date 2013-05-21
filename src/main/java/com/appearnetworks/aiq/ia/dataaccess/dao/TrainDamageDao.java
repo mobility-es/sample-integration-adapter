@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface TrainDamageDao {
 
-    void create(TrainDamageReport trainDamageReport);
+    void create(TrainDamageReportDO trainDamageReportDO);
     List<TrainDamageReportDO> getAll();
     TrainDamageReportDO find(String trainDamageReportId) throws NoSuchDataObjectException;
 }

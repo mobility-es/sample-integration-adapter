@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Qambber Hussain, Appear Networks.
  */
-public class TrainTypeDO {
+public class TrainTypeDO extends DataObject {
     private String type;
     private List<DamageCodeDO> defectCodes;
     private List<TrainPartDO> trainParts;

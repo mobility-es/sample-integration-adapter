@@ -18,7 +18,7 @@ public interface TrainDao {
      * Create a new train
      * @param train
      */
-    void create(Train train);
+    void create(TrainDO train);
 
     /**
      *

@@ -3,6 +3,8 @@ package com.appearnetworks.aiq.ia;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
+import com.appearnetworks.aiq.ia.dataaccess.manager.TrainDamageReportManager;
+import com.appearnetworks.aiq.ia.dataaccess.manager.TrainManager;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
@@ -24,9 +26,9 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
     private static Logger LOG = Logger.getLogger(IntegrationAdapterImpl.class.getName());
 
     @Autowired
-    private TrainDao trainDao;
+    private TrainManager trainManager;
     @Autowired
-    private TrainDamageDao trainDamageDao;
+    private TrainDamageReportManager trainDamageReportManager;
 
     @Override
     public List<DocumentReference> findByUserAndDevice(String userId, String deviceId) {
@@ -44,26 +46,26 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
     }
 
     private List<DocumentReference> fetchAllTrainDamageReports() {
-        List<TrainDamageReportDO> trainDamageReportDOList = trainDamageDao.getAll();
+        List<TrainDamageReport> trainDamageReports = trainDamageReportManager.getAll();
         List<DocumentReference> documentReferenceList = new ArrayList<>();
 
-        for (TrainDamageReportDO damageReportDO : trainDamageReportDOList) {
-            documentReferenceList.add(new DocumentReference(TrainDamageReport.DOC_ID_PREFIX + damageReportDO.getId(),
+        for (TrainDamageReport damageReport : trainDamageReports) {
+            documentReferenceList.add(new DocumentReference(TrainDamageReport.DOC_ID_PREFIX + damageReport.get_id(),
                                                             TrainDamageReport.DOC_TYPE,
-                                                            damageReportDO.getRev()));
+                                                            damageReport.get_rev()));
         }
 
         return documentReferenceList;
     }
 
     private List<DocumentReference> fetchAllTrains() {
-        List<TrainDO> trainDOList = trainDao.getAll();
+        List<Train> trains = trainManager.getAll();
         List<DocumentReference> documentReferenceList = new ArrayList<>();
 
-        for (TrainDO trainDO : trainDOList) {
-            documentReferenceList.add(new DocumentReference(Train.DOC_ID_PREFIX + trainDO.getId(),
+        for (Train train : trains) {
+            documentReferenceList.add(new DocumentReference(Train.DOC_ID_PREFIX + train.get_id(),
                                                                         Train.DOC_TYPE,
-                                                                        trainDO.getRev()));
+                                                                        train.get_rev()));
         }
 
         return documentReferenceList;
@@ -83,10 +85,10 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
 
     private ObjectNode fetchTrainDamageReportDocument(String docId) {
         try {
-            TrainDamageReportDO trainDamageReportDO = trainDamageDao.find(docId.substring(TrainDamageReport.DOC_ID_PREFIX.length()));
+            TrainDamageReport trainDamageReport = trainDamageReportManager.find(docId.substring(TrainDamageReport.DOC_ID_PREFIX.length()));
             ObjectMapper mapper = new ObjectMapper();
 
-            return mapper.valueToTree(trainDamageReportDO);
+            return mapper.valueToTree(trainDamageReport);
         } catch (NoSuchDataObjectException e) {
             LOG.log(Level.WARNING, "Train damage report with id:" + docId + " not found.", e);
         }
@@ -96,10 +98,10 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
 
     private ObjectNode fetchTrainDocument(String docId){
         try {
-            TrainDO trainDO = trainDao.find(docId.substring(Train.DOC_ID_PREFIX.length()));
+            Train train = trainManager.find(docId.substring(Train.DOC_ID_PREFIX.length()));
             ObjectMapper mapper = new ObjectMapper();
 
-            return mapper.valueToTree(trainDO);
+            return mapper.valueToTree(train);
         } catch (NoSuchDataObjectException e) {
             LOG.log(Level.WARNING, "Train with id:" + docId + " not found.", e);
         }

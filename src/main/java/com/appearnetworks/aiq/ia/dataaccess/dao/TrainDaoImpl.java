@@ -18,12 +18,7 @@ public class TrainDaoImpl implements TrainDao {
     private final Map<String, TrainDO> trainMap = new ConcurrentHashMap<String, TrainDO>();
 
     @Override
-    public void create(Train train) {
-
-        Long number = train.getNumber();
-        TrainTypeDO trainTypeDO = new TrainTypeDO(train.getTrainType());
-        TrainDO trainDO = new TrainDO(number, trainTypeDO);
-
+    public void create(TrainDO trainDO) {
         trainMap.put(trainDO.getId(), trainDO);
     }
 
@@ -39,30 +34,5 @@ public class TrainDaoImpl implements TrainDao {
     @Override
     public List<TrainDO> getAll() {
         return new ArrayList<>(trainMap.values());
-    }
-
-    private List<Train> convertToTrains(Collection<TrainDO> trainDOs) {
-        List<Train> trains = new ArrayList<Train>();
-
-        for(TrainDO trainDO : trainDOs) {
-            trains.add(convertToTrain(trainDO));
-        }
-
-        return trains;
-    }
-
-    private Train convertToTrain(TrainDO trainDO) {
-        String id = trainDO.getId();
-        Long rev = trainDO.getRev();
-        Long number = trainDO.getNumber();
-        String type = trainDO.getTrainTypeDO().getType();
-
-        Train train = new Train();
-        train.setId(id);
-        train.setRev(rev);
-        train.setTrainType(type);
-        train.setNumber(number);
-
-        return train;
     }
 }

@@ -24,30 +24,8 @@ public class TrainDamageDaoImpl implements TrainDamageDao {
     private TrainDao trainDao;
 
     @Override
-    public void create(TrainDamageReport trainDamageReport) {
-        TrainDamageReportDO trainDamageReportDO = new TrainDamageReportDO();
-        trainDamageReportDO.setDamageCause(trainDamageReport.getDamageCause());
+    public void create(TrainDamageReportDO trainDamageReportDO) {
 
-        trainDamageReportDO.setDamageCode(trainDamageReport.getDamageCode());
-        trainDamageReportDO.setDamageDateTime(trainDamageReport.getDamageDateTime());
-        trainDamageReportDO.setDamageText(trainDamageReport.getDamageText());
-        trainDamageReportDO.setHeading(trainDamageReport.getHeading());
-        trainDamageReportDO.setLevel1(trainDamageReport.getLevel1());
-        trainDamageReportDO.setLevel2(trainDamageReport.getLevel2());
-        trainDamageReportDO.setLevel3(trainDamageReport.getLevel3());
-        trainDamageReportDO.setOperation(trainDamageReport.getOperation());
-        trainDamageReportDO.setReportedBy(trainDamageReport.getReportedBy());
-
-        TrainDO trainDO = null;
-
-        try {
-            trainDO = trainDao.find(trainDamageReport.getTrainId());
-        } catch (NoSuchDataObjectException e) {
-            throw new IllegalArgumentException("Invalid train damage report.");
-        }
-
-        trainDamageReportDO.setTrain(trainDO);
-        trainDamageReportDO.setTrainPart(trainDamageReport.getTrainPart());
 
         trainDamageReportMap.put(trainDamageReportDO.getId(), trainDamageReportDO);
     }
