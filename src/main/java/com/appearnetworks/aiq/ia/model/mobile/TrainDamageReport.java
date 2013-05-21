@@ -7,9 +7,11 @@ import java.util.Date;
  */
 public class TrainDamageReport {
 
+    public static final String DOC_TYPE = "TD.TrainDamageReport";
+    public static final String DOC_ID_PREFIX = "_TrainDamageReport_";
+
     private String id;
     private Long rev;
-    private String docType = "Sample.TrainDamageReport";
 
     private String trainId;
     private String level1;
@@ -38,14 +40,6 @@ public class TrainDamageReport {
 
     public void setRev(Long rev) {
         this.rev = rev;
-    }
-
-    public String getDocType() {
-        return docType;
-    }
-
-    public void setDocType(String docType) {
-        this.docType = docType;
     }
 
     public String getTrainId() {

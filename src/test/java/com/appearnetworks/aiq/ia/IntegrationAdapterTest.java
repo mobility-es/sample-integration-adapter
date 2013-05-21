@@ -16,11 +16,6 @@ public class IntegrationAdapterTest {
         integrationAdapter = new IntegrationAdapterImpl();
     }
 
-    // TODO Test your integration adapter here
-
-    /**
-     * TODO Dummy sample, replace me
-     */
     @Test
     public void listDocuments() {
         assertArrayEquals(new DocumentReference[] {

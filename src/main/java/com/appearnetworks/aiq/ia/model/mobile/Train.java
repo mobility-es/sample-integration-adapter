@@ -1,11 +1,11 @@
 package com.appearnetworks.aiq.ia.model.mobile;
 
 /**
- * @author Qambber Hussain, Appear Networks.
+ *
  */
 public class Train {
 
-    public static final String DOC_TYPE = "Sample.Train";
+    public static final String DOC_TYPE = "TD.Train";
     public static final String DOC_ID_PREFIX = "_Train_";
 
     private String id;

@@ -56,4 +56,13 @@ public class TrainDamageDaoImpl implements TrainDamageDao {
     public List<TrainDamageReportDO> getAll() {
         return new ArrayList<>(trainDamageReportMap.values());
     }
+
+    @Override
+    public TrainDamageReportDO find(String trainDamageReportId) throws NoSuchDataObjectException{
+        if(trainDamageReportMap.containsKey(trainDamageReportId)) {
+            return trainDamageReportMap.get(trainDamageReportId);
+        } else {
+            throw new NoSuchDataObjectException("Train damage report with id [" + trainDamageReportId + " ] not found.");
+        }
+    }
 }
