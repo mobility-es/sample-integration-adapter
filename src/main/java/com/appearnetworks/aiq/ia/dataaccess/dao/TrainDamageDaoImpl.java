@@ -3,7 +3,7 @@ package com.appearnetworks.aiq.ia.dataaccess.dao;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
-import com.appearnetworks.aiq.ia.rest.model.TrainDamageReport;
+import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

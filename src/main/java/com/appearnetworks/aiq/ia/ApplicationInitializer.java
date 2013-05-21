@@ -2,7 +2,7 @@ package com.appearnetworks.aiq.ia;
 
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
-import com.appearnetworks.aiq.ia.rest.model.Train;
+import com.appearnetworks.aiq.ia.model.mobile.Train;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

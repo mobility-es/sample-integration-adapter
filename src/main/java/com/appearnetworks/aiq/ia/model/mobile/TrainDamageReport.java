@@ -1,4 +1,4 @@
-package com.appearnetworks.aiq.ia.rest.model;
+package com.appearnetworks.aiq.ia.model.mobile;
 
 import java.util.Date;
 

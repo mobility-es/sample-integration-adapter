@@ -1,7 +1,7 @@
 package com.appearnetworks.aiq.ia.dataaccess.dao;
 
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
-import com.appearnetworks.aiq.ia.rest.model.TrainDamageReport;
+import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 
 import java.util.List;
 

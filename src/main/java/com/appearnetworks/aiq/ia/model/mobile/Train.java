@@ -1,12 +1,15 @@
-package com.appearnetworks.aiq.ia.rest.model;
+package com.appearnetworks.aiq.ia.model.mobile;
 
 /**
  * @author Qambber Hussain, Appear Networks.
  */
 public class Train {
+
+    public static final String DOC_TYPE = "Sample.Train";
+    public static final String DOC_ID_PREFIX = "_Train_";
+
     private String id;
     private Long rev;
-    private String docType = "Sample.Train";
 
     private Long number;
     private String trainType;
@@ -25,14 +28,6 @@ public class Train {
 
     public void setRev(Long rev) {
         this.rev = rev;
-    }
-
-    public String getDocType() {
-        return docType;
-    }
-
-    public void setDocType(String docType) {
-        this.docType = docType;
     }
 
     public Long getNumber() {

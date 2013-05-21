@@ -1,7 +1,5 @@
 package com.appearnetworks.aiq.ia.dataaccess.model;
 
-import com.appearnetworks.aiq.ia.rest.model.Train;
-
 import java.util.Date;
 
 /**
