@@ -55,7 +55,7 @@ public class ApplicationInitializer implements InitializingBean {
 
         TrainTypeDO trainTypeDO2 = new TrainTypeDO();
         trainTypeDO2.setName("trainType2");
-        
+
         List<DamageCodeDO> trainTypeDO2damageCodes = new ArrayList<>();
         trainTypeDO2damageCodes.add(damageCodeDO3);
         trainTypeDO1damageCodes.add(damageCodeDO4);
