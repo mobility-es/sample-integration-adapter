@@ -8,7 +8,7 @@ import java.util.Date;
 public class TrainDamageReportDO extends DataObject {
     private Long rev;
     private TrainDO train;
-    private DamageCodeDO damageCode;
+    private SelectedDamageCodeDO damageCode;
     private TrainPartDO trainPart;
     private String heading;
     private String damageText;
@@ -93,11 +93,11 @@ public class TrainDamageReportDO extends DataObject {
         this.operation = operation;
     }
 
-    public DamageCodeDO getDamageCode() {
+    public SelectedDamageCodeDO getDamageCode() {
         return damageCode;
     }
 
-    public void setDamageCode(DamageCodeDO damageCode) {
+    public void setDamageCode(SelectedDamageCodeDO damageCode) {
         this.damageCode = damageCode;
     }
 }

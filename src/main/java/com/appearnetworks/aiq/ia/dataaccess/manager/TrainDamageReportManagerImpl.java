@@ -34,11 +34,15 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
             throw new IllegalArgumentException("Invalid train damage report.");
         }
 
-        List<DamageCodeDO> damageCodeDOs = trainDO.getTrainTypeDO().getDamageCodes();
-        DamageCodeDO damageCodeDO = findDamageCodeDO(damageCodeDOs, trainDamageReport);
 
         trainDamageReportDO.setDamageCause(trainDamageReport.getDamageCause());
-        trainDamageReportDO.setDamageCode(damageCodeDO);
+
+        SelectedDamageCodeDO selectedDamageCodeDO = new SelectedDamageCodeDO(trainDamageReport.getLevel1(),
+                trainDamageReport.getLevel2(),
+                trainDamageReport.getLevel3(),
+                trainDamageReport.getDamageCode());
+
+        trainDamageReportDO.setDamageCode(selectedDamageCodeDO);
         trainDamageReportDO.setDamageDateTime(trainDamageReport.getDamageDateTime());
         trainDamageReportDO.setDamageText(trainDamageReport.getDamageText());
         trainDamageReportDO.setHeading(trainDamageReport.getHeading());
@@ -126,20 +130,6 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
             trainDamageReports.add(convertToTrainDamageReport(trainDamageReportDO));
         }
         return trainDamageReports;
-    }
-
-    private DamageCodeDO findDamageCodeDO(List<DamageCodeDO> damageCodeDOs, TrainDamageReport trainDamageReport){
-        for (DamageCodeDO damageCodeDO : damageCodeDOs) {
-            if(damageCodeDO.getLevel1().equals(trainDamageReport.getLevel1()) &&
-                    damageCodeDO.getLevel2().equals(trainDamageReport.getLevel2()) &&
-                    damageCodeDO.getLevel3().equals(trainDamageReport.getLevel3()) &&
-                    damageCodeDO.getName().equals(trainDamageReport.getDamageCode())) {
-
-                return damageCodeDO;
-            }
-        }
-
-        throw new IllegalArgumentException("No such damage code for train with id [" + trainDamageReport.getTrainId() + "]");
     }
 
     private TrainPartDO findTrainPartDO(List<TrainPartDO> trainPartDOs, TrainDamageReport trainDamageReport) {

@@ -2,14 +2,8 @@ package com.appearnetworks.aiq.ia.dataaccess.manager;
 
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
-import com.appearnetworks.aiq.ia.dataaccess.model.DamageCodeDO;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainPartDO;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainTypeDO;
-import com.appearnetworks.aiq.ia.model.mobile.DamageCode;
-import com.appearnetworks.aiq.ia.model.mobile.Train;
-import com.appearnetworks.aiq.ia.model.mobile.TrainPart;
-import com.appearnetworks.aiq.ia.model.mobile.TrainType;
+import com.appearnetworks.aiq.ia.dataaccess.model.*;
+import com.appearnetworks.aiq.ia.model.mobile.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -79,11 +73,17 @@ public class TrainManagerImpl implements TrainManager {
     }
 
     private DamageCode convertToDamageCode(DamageCodeDO damageCodeDO) {
-        DamageCode damageCode = new DamageCode();
-        damageCode.setName(damageCodeDO.getName());
-        //TODO fix damage codes.
-        //damageCode.setSubCodes();
-        return damageCode;
+        List<SubCode1> subCode1s = new ArrayList<>();
+
+        for (SubCode1DO subCode1DO : damageCodeDO.getSubCode1DOs()) {
+            List<SubCode2> subCode2s = new ArrayList<>();
+            for (SubCode2DO subCode2DO : subCode1DO.getSubCode2DOs()) {
+                subCode2s.add(new SubCode2(subCode2DO.getId(), subCode2DO.getName()));
+            }
+            subCode1s.add(new SubCode1(subCode1DO.getName(), subCode2s));
+        }
+
+        return new DamageCode(damageCodeDO.getName(), subCode1s);
     }
 
     private List<TrainPart> convertToTrainParts(List<TrainPartDO> trainPartDOs) {

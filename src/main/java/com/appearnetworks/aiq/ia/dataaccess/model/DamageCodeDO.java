@@ -1,31 +1,18 @@
 package com.appearnetworks.aiq.ia.dataaccess.model;
 
-/**
- * @author Qambber Hussain, Appear Networks.
- */
+import java.util.List;
+
 public class DamageCodeDO extends DataObject {
-    private String level1;
-    private String level2;
-    private String level3;
     private String name;
+    private List<SubCode1DO> subCode1DOs;
 
-    public DamageCodeDO(String level1, String level2, String level3, String name) {
-        this.level1 = level1;
-        this.level2 = level2;
-        this.level3 = level3;
+    public DamageCodeDO(String name, List<SubCode1DO> subCode1DOs) {
         this.name = name;
+        this.subCode1DOs = subCode1DOs;
     }
 
-    public String getLevel1() {
-        return level1;
-    }
-
-    public String getLevel3() {
-        return level3;
-    }
-
-    public String getLevel2() {
-        return level2;
+    public List<SubCode1DO> getSubCode1DOs() {
+        return subCode1DOs;
     }
 
     public String getName() {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,18 @@ public class ApplicationInitializer implements InitializingBean {
         for (TrainDO trainDO : trainDOs) {
             TrainDamageReportDO trainDamageReportDO = new TrainDamageReportDO();
             trainDamageReportDO.setDamageCause("Out of order");
-            trainDamageReportDO.setDamageCode(trainDO.getTrainTypeDO().getDamageCodes().get(0));
+
+            DamageCodeDO damageCodeDO = trainDO.getTrainTypeDO().getDamageCodes().get(0);
+
+            String level1 = damageCodeDO.getName();
+            SubCode1DO subCode1DO = damageCodeDO.getSubCode1DOs().get(0);
+            String level2 = subCode1DO.getName();
+            String level3 = subCode1DO.getSubCode2DOs().get(0).getName();
+            String name = subCode1DO.getSubCode2DOs().get(0).getId();
+
+            SelectedDamageCodeDO selectedDamageCodeDO = new SelectedDamageCodeDO(level1, level2, level3, name);
+
+            trainDamageReportDO.setDamageCode(selectedDamageCodeDO);
             trainDamageReportDO.setDamageDateTime(new Date());
             trainDamageReportDO.setDamageText("Should be fixed");
             trainDamageReportDO.setHeading("Important to fix");
@@ -50,7 +62,24 @@ public class ApplicationInitializer implements InitializingBean {
     }
 
     private void createTrains() {
-        DamageCodeDO damageCodeDO1 = new DamageCodeDO("l11", "l12", "l13", "1");
+        SubCode2DO subCode2DO1 = new SubCode2DO("1", "sc1sc21");
+        SubCode2DO subCode2DO2 = new SubCode2DO("1", "sc1sc22");
+        List<SubCode2DO> subCode2DOs = new ArrayList<>();
+        subCode2DOs.add(subCode2DO1);
+        subCode2DOs.add(subCode2DO2);
+        SubCode1DO subCode1DO1 = new SubCode1DO("sc1", subCode2DOs);
+
+        SubCode2DO subCode2DO2 = new SubCode2DO("1", "sc1sc23");
+        SubCode2DO subCode2DO2 = new SubCode2DO("1", "sc1sc24");
+        List<SubCode2DO> subCode2DOs = new ArrayList<>();
+        subCode2DOs.add(subCode2DO1);
+        subCode2DOs.add(subCode2DO2);
+        SubCode1DO subCode1DO1 = new SubCode1DO("l21", subCode2DOs);
+
+
+        DamageCodeDO damageCodeDO1 = new DamageCodeDO("l11", Collections.singletonList(subCode1DO));
+
+
         DamageCodeDO damageCodeDO2 = new DamageCodeDO("l21", "l22", "l23", "2");
         DamageCodeDO damageCodeDO3 = new DamageCodeDO("l31", "l32", "l33", "1");
         DamageCodeDO damageCodeDO4 = new DamageCodeDO("l41", "l42", "l23", "2");
