@@ -1,13 +1,10 @@
 package com.appearnetworks.aiq.ia;
 
-import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageDao;
-import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
 import com.appearnetworks.aiq.ia.dataaccess.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.dataaccess.manager.TrainManager;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
+import com.appearnetworks.aiq.ia.model.mobile.TrainDamageImageRef;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
 import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapterBase;
@@ -45,17 +42,31 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         return documentReferences;
     }
 
-    private List<DocumentReference> fetchAllTrainDamageReports() {
-        List<TrainDamageReport> trainDamageReports = trainDamageReportManager.getAll();
-        List<DocumentReference> documentReferenceList = new ArrayList<>();
+    private List<DocumentReference> fetchAllTrainDamageReportsImages(String userId, String deviceId) {
+        List<TrainDamageImageRef> trainDamageImageRefs = trainDamageReportManager.getTrainDamageImagesByUserIdAndDeviceId(userId, deviceId);
+        List<DocumentReference> documentReferences = new ArrayList<>();
 
-        for (TrainDamageReport damageReport : trainDamageReports) {
-            documentReferenceList.add(new DocumentReference(TrainDamageReport.DOC_ID_PREFIX + damageReport.get_id(),
-                                                            TrainDamageReport.DOC_TYPE,
-                                                            damageReport.get_rev()));
+        for (TrainDamageImageRef trainDamageImageRef : trainDamageImageRefs) {
+            documentReferences.add(new DocumentReference(
+                    trainDamageImageRef.get_id(),
+                    TrainDamageImageRef.DOC_TYPE,
+                    trainDamageImageRef.get_rev()));
         }
 
-        return documentReferenceList;
+        return documentReferences;
+    }
+
+    private List<DocumentReference> fetchAllTrainDamageReports() {
+        List<TrainDamageReport> trainDamageReports = trainDamageReportManager.getAll();
+        List<DocumentReference> documentReferences = new ArrayList<>();
+
+        for (TrainDamageReport damageReport : trainDamageReports) {
+            documentReferences.add(new DocumentReference(TrainDamageReport.DOC_ID_PREFIX + damageReport.get_id(),
+                    TrainDamageReport.DOC_TYPE,
+                    damageReport.get_rev()));
+        }
+
+        return documentReferences;
     }
 
     private List<DocumentReference> fetchAllTrains() {
@@ -78,9 +89,21 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
                 return fetchTrainDocument(docId);
             case TrainDamageReport.DOC_TYPE:
                 return fetchTrainDamageReportDocument(docId);
+            case TrainDamageImageRef.DOC_TYPE:
+                return fetchTrainDamageImageDocument(docId);
             default:
                 return super.retrieveDocument(docType, docId);
         }
+    }
+
+    private ObjectNode fetchTrainDamageImageDocument(String docId) {
+        try {
+            TrainDamageImageRef trainDamageImageRef = trainDamageReportManager.findTrainDamageImageById(docId);
+        } catch (NoSuchDataObjectException e) {
+            LOG.log(Level.WARNING, "Train damage report with id:" + docId + " not found.", e);
+        }
+
+        return null;
     }
 
     private ObjectNode fetchTrainDamageReportDocument(String docId) {

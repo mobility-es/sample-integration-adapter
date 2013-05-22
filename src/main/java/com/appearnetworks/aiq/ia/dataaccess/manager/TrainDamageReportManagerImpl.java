@@ -3,16 +3,13 @@ package com.appearnetworks.aiq.ia.dataaccess.manager;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageImageDO;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
-import com.appearnetworks.aiq.ia.model.mobile.TrainDamageImage;
+import com.appearnetworks.aiq.ia.dataaccess.model.*;
+import com.appearnetworks.aiq.ia.model.mobile.TrainDamageImageRef;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,18 +26,6 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
     @Override
     public void create(TrainDamageReport trainDamageReport) {
         TrainDamageReportDO trainDamageReportDO = new TrainDamageReportDO();
-        trainDamageReportDO.setDamageCause(trainDamageReport.getDamageCause());
-
-        trainDamageReportDO.setDamageCode(trainDamageReport.getDamageCode());
-        trainDamageReportDO.setDamageDateTime(trainDamageReport.getDamageDateTime());
-        trainDamageReportDO.setDamageText(trainDamageReport.getDamageText());
-        trainDamageReportDO.setHeading(trainDamageReport.getHeading());
-        trainDamageReportDO.setLevel1(trainDamageReport.getLevel1());
-        trainDamageReportDO.setLevel2(trainDamageReport.getLevel2());
-        trainDamageReportDO.setLevel3(trainDamageReport.getLevel3());
-        trainDamageReportDO.setOperation(trainDamageReport.getOperation());
-        trainDamageReportDO.setReportedBy(trainDamageReport.getReportedBy());
-
         TrainDO trainDO = null;
 
         try {
@@ -49,24 +34,57 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
             throw new IllegalArgumentException("Invalid train damage report.");
         }
 
+        List<DamageCodeDO> damageCodeDOs = trainDO.getTrainTypeDO().getDamageCodes();
+        DamageCodeDO damageCodeDO = findDamageCodeDO(damageCodeDOs, trainDamageReport);
+
+        trainDamageReportDO.setDamageCause(trainDamageReport.getDamageCause());
+        trainDamageReportDO.setDamageCode(damageCodeDO);
+        trainDamageReportDO.setDamageDateTime(trainDamageReport.getDamageDateTime());
+        trainDamageReportDO.setDamageText(trainDamageReport.getDamageText());
+        trainDamageReportDO.setHeading(trainDamageReport.getHeading());
+        trainDamageReportDO.setOperation(trainDamageReport.getOperation());
+        trainDamageReportDO.setReportedBy(trainDamageReport.getReportedBy());
         trainDamageReportDO.setTrain(trainDO);
-        trainDamageReportDO.setTrainPart(trainDamageReport.getTrainPart());
+
+        List<TrainPartDO> trainPartDOs = trainDO.getTrainTypeDO().getTrainParts();
+        TrainPartDO trainPartDO = findTrainPartDO(trainPartDOs, trainDamageReport);
+        trainDamageReportDO.setTrainPart(trainPartDO);
+
         trainDamageDao.create(trainDamageReportDO);
     }
 
     @Override
-    public void createTrainDamageImage(TrainDamageImage trainDamageImage, String id, String userId, String deviceId) {
+    public void createTrainDamageImage(TrainDamageImageRef trainDamageImageRef, String id, String userId, String deviceId) {
         TrainDamageImageDO trainDamageImageDO = new TrainDamageImageDO();
         trainDamageImageDO.setId(id);
         trainDamageImageDO.setUserId(userId);
         trainDamageImageDO.setDeviceId(deviceId);
-        trainDamageImageDO.setDamageId(trainDamageImage.getDamageId());
-        trainDamageImageDO.setCreationDate(new Date(trainDamageImage.getCreationDate()));
+        trainDamageImageDO.setDamageId(trainDamageImageRef.getDamageId());
+        trainDamageImageDO.setCreationDate(trainDamageImageRef.getCreationDate());
+
         trainDamageDao.createAttachment(trainDamageImageDO);
     }
 
     public long updateTrainDamageImage(String id, String name, String contentType, byte[] data) {
         return trainDamageDao.updateAttachment(id, name, contentType, data);
+    }
+
+    @Override
+    public List<TrainDamageImageRef> getTrainDamageImagesByUserIdAndDeviceId(String userId, String deviceId) {
+        return convertToTrainDamageImages(trainDamageDao.getAttachmentsByUserIdAndDeviceId(userId, deviceId));
+    }
+
+    private List<TrainDamageImageRef> convertToTrainDamageImages(List<TrainDamageImageDO> trainDamageImageDOs) {
+        List<TrainDamageImageRef> trainDamageImageRefs = new ArrayList<>();
+        for (TrainDamageImageDO damageImageDO : trainDamageImageDOs) {
+            trainDamageImageRefs.add(convertToTrainDamageImage(damageImageDO));
+        }
+
+        return trainDamageImageRefs;
+    }
+
+    private TrainDamageImageRef convertToTrainDamageImage(TrainDamageImageDO damageImageDO) {
+        return new TrainDamageImageRef(damageImageDO.getId(), damageImageDO.getRevision(), damageImageDO.getDamageId(), damageImageDO.getCreationDate());
     }
 
     @Override
@@ -79,15 +97,20 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
         return convertToTrainDamageReports(trainDamageDao.getAll());
     }
 
+    @Override
+    public TrainDamageImageRef findTrainDamageImageById(String id) throws NoSuchDataObjectException {
+        return convertToTrainDamageImage(trainDamageDao.findAttachmentById(id));
+    }
+
     private TrainDamageReport convertToTrainDamageReport(TrainDamageReportDO trainDamageReportDO) {
         return new TrainDamageReport(trainDamageReportDO.getId(),
                 trainDamageReportDO.getRev(),
                 trainDamageReportDO.getTrain().getId(),
-                trainDamageReportDO.getLevel1(),
-                trainDamageReportDO.getLevel2(),
-                trainDamageReportDO.getLevel3(),
-                trainDamageReportDO.getTrainPart(),
-                trainDamageReportDO.getDamageCode(),
+                trainDamageReportDO.getDamageCode().getLevel1(),
+                trainDamageReportDO.getDamageCode().getLevel2(),
+                trainDamageReportDO.getDamageCode().getLevel3(),
+                trainDamageReportDO.getTrainPart().getName(),
+                trainDamageReportDO.getDamageCode().getName(),
                 trainDamageReportDO.getHeading(),
                 trainDamageReportDO.getDamageText(),
                 trainDamageReportDO.getReportedBy(),
@@ -103,5 +126,29 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
             trainDamageReports.add(convertToTrainDamageReport(trainDamageReportDO));
         }
         return trainDamageReports;
+    }
+
+    private DamageCodeDO findDamageCodeDO(List<DamageCodeDO> damageCodeDOs, TrainDamageReport trainDamageReport){
+        for (DamageCodeDO damageCodeDO : damageCodeDOs) {
+            if(damageCodeDO.getLevel1().equals(trainDamageReport.getLevel1()) &&
+                    damageCodeDO.getLevel2().equals(trainDamageReport.getLevel2()) &&
+                    damageCodeDO.getLevel3().equals(trainDamageReport.getLevel3()) &&
+                    damageCodeDO.getName().equals(trainDamageReport.getDamageCode())) {
+
+                return damageCodeDO;
+            }
+        }
+
+        throw new IllegalArgumentException("No such damage code for train with id [" + trainDamageReport.getTrainId() + "]");
+    }
+
+    private TrainPartDO findTrainPartDO(List<TrainPartDO> trainPartDOs, TrainDamageReport trainDamageReport) {
+        for (TrainPartDO trainPartDO : trainPartDOs) {
+            if(trainPartDO.getName().equals(trainDamageReport.getTrainPart())) {
+                return trainPartDO;
+            }
+        }
+
+        throw new IllegalArgumentException("No such train part for train with id [" + trainDamageReport.getTrainId() + "]");
     }
 }

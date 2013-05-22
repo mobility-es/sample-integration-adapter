@@ -2,15 +2,13 @@ package com.appearnetworks.aiq.ia;
 
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
-import com.appearnetworks.aiq.ia.dataaccess.model.DamageCodeDO;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainPartDO;
-import com.appearnetworks.aiq.ia.dataaccess.model.TrainTypeDO;
+import com.appearnetworks.aiq.ia.dataaccess.model.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,7 +26,30 @@ public class ApplicationInitializer implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        createTrains();
+        createTrainDamages();
+    }
 
+    private void createTrainDamages() {
+        List<TrainDO> trainDOs = trainDao.getAll();
+
+        for (TrainDO trainDO : trainDOs) {
+            TrainDamageReportDO trainDamageReportDO = new TrainDamageReportDO();
+            trainDamageReportDO.setDamageCause("Out of order");
+            trainDamageReportDO.setDamageCode(trainDO.getTrainTypeDO().getDamageCodes().get(0));
+            trainDamageReportDO.setDamageDateTime(new Date());
+            trainDamageReportDO.setDamageText("Should be fixed");
+            trainDamageReportDO.setHeading("Important to fix");
+            trainDamageReportDO.setOperation("Night operation");
+            trainDamageReportDO.setReportedBy("Alex");
+            trainDamageReportDO.setTrain(trainDO);
+            trainDamageReportDO.setTrainPart(trainDO.getTrainTypeDO().getTrainParts().get(0));
+
+            trainDamageDao.create(trainDamageReportDO);
+        }
+    }
+
+    private void createTrains() {
         DamageCodeDO damageCodeDO1 = new DamageCodeDO("l11", "l12", "l13", "1");
         DamageCodeDO damageCodeDO2 = new DamageCodeDO("l21", "l22", "l23", "2");
         DamageCodeDO damageCodeDO3 = new DamageCodeDO("l31", "l32", "l33", "1");
@@ -78,7 +99,5 @@ public class ApplicationInitializer implements InitializingBean {
         trainDao.create(new TrainDO(8L, trainTypeDO2));
         trainDao.create(new TrainDO(9L, trainTypeDO2));
         trainDao.create(new TrainDO(10L, trainTypeDO2));
-
-
     }
 }
