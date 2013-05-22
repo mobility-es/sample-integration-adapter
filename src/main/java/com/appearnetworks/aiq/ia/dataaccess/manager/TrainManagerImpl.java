@@ -2,9 +2,14 @@ package com.appearnetworks.aiq.ia.dataaccess.manager;
 
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
+import com.appearnetworks.aiq.ia.dataaccess.model.DamageCodeDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
+import com.appearnetworks.aiq.ia.dataaccess.model.TrainPartDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainTypeDO;
+import com.appearnetworks.aiq.ia.model.mobile.DamageCode;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
+import com.appearnetworks.aiq.ia.model.mobile.TrainPart;
+import com.appearnetworks.aiq.ia.model.mobile.TrainType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,9 +50,53 @@ public class TrainManagerImpl implements TrainManager {
         String id = trainDO.getId();
         long rev = trainDO.getRev();
         long number = trainDO.getNumber();
-        String type = trainDO.getTrainTypeDO().getType();
+
+        TrainTypeDO trainTypeDO = trainDO.getTrainTypeDO();
+
+        convertToDamageCode(train)
+        trainTypeDO.getDamageCodes();
+
+
 
         return new Train(id, rev, number, type);
+    }
+
+
+    private TrainType convertToTrainType(TrainTypeDO trainTypeDO) {
+
+        TrainType trainType = new TrainType();
+        trainType.setName(trainTypeDO.getName());
+
+
+        return null;
+
+    }
+
+    private List<DamageCode> convertToDamageCodes(List<DamageCodeDO> damageCodeDOs) {
+        List<DamageCode> damageCodes = new ArrayList<>();
+        for(DamageCodeDO damageCodeDO : damageCodeDOs) {
+            damageCodes.add(convertToDamageCode(damageCodeDO));
+        }
+        return damageCodes;
+    }
+
+    private DamageCode convertToDamageCode(DamageCodeDO damageCodeDO) {
+        DamageCode damageCode = new DamageCode();
+        damageCode.setName(damageCodeDO.getName());
+        //TODO fix damage codes.
+        //damageCode.setSubCodes();
+        return damageCode;
+    }
+
+    private TrainParts convertToTrainParts(List<TrainPartDO> trainPartDOs) {
+
+    }
+
+    private TrainPart convertToTrainPart(TrainPartDO trainPartDO) {
+        TrainPart trainPart = new TrainPart();
+        trainPart.setName(trainPartDO.getName());
+        trainPart.setValue(trainPartDO.getValue());
+        return trainPart;
     }
 
 }

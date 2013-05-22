@@ -6,24 +6,24 @@ import java.util.List;
  * @author Qambber Hussain, Appear Networks.
  */
 public class TrainTypeDO extends DataObject {
-    private String type;
-    private List<DamageCodeDO> defectCodes;
+    private String name;
+    private List<DamageCodeDO> damageCodes;
     private List<TrainPartDO> trainParts;
 
-    public TrainTypeDO(String type) {
-        this.type = type;
+    public String getName() {
+        return name;
     }
 
-    public String getType() {
-        return type;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<DamageCodeDO> getDefectCodes() {
-        return defectCodes;
+    public List<DamageCodeDO> getDamageCodes() {
+        return damageCodes;
     }
 
-    public void setDefectCodes(List<DamageCodeDO> defectCodes) {
-        this.defectCodes = defectCodes;
+    public void setDamageCodes(List<DamageCodeDO> damageCodes) {
+        this.damageCodes = damageCodes;
     }
 
     public List<TrainPartDO> getTrainParts() {

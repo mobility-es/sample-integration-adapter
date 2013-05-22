@@ -7,5 +7,16 @@ public class TrainPartDO {
     private String name;
     private String value;
 
+    public TrainPartDO(String name, String value) {
+        this.name = name;
+        this.value = value;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }
