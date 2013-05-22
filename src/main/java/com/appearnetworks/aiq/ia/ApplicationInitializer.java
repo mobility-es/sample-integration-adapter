@@ -40,7 +40,9 @@ public class ApplicationInitializer implements InitializingBean {
         TrainPartDO trainPartDO4 = new TrainPartDO("tp4", "tpv4");
 
         //Create train types
-        TrainTypeDO trainTypeDO1 = new TrainTypeDO("trainType1");
+        TrainTypeDO trainTypeDO1 = new TrainTypeDO();
+        trainTypeDO1.setName("trainType1");
+
         List<DamageCodeDO> trainTypeDO1damageCodes = new ArrayList<>();
         trainTypeDO1damageCodes.add(damageCodeDO1);
         trainTypeDO1damageCodes.add(damageCodeDO2);
@@ -51,7 +53,9 @@ public class ApplicationInitializer implements InitializingBean {
         trainTypeDO1trainParts.add(trainPartDO2);
         trainTypeDO1.setTrainParts(trainTypeDO1trainParts);
 
-        TrainTypeDO trainTypeDO2 = new TrainTypeDO("trainType2");
+        TrainTypeDO trainTypeDO2 = new TrainTypeDO();
+        trainTypeDO2.setName("trainType2");
+        
         List<DamageCodeDO> trainTypeDO2damageCodes = new ArrayList<>();
         trainTypeDO2damageCodes.add(damageCodeDO3);
         trainTypeDO1damageCodes.add(damageCodeDO4);

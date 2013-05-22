@@ -51,14 +51,11 @@ public class TrainManagerImpl implements TrainManager {
         long rev = trainDO.getRev();
         long number = trainDO.getNumber();
 
-        TrainTypeDO trainTypeDO = trainDO.getTrainTypeDO();
-
-        convertToDamageCode(train)
-        trainTypeDO.getDamageCodes();
+        TrainType trainType = convertToTrainType(trainDO.getTrainTypeDO());
 
 
 
-        return new Train(id, rev, number, type);
+        return new Train(id, rev, number, trainType);
     }
 
 
@@ -66,9 +63,10 @@ public class TrainManagerImpl implements TrainManager {
 
         TrainType trainType = new TrainType();
         trainType.setName(trainTypeDO.getName());
+        trainType.setDamageCodes(convertToDamageCodes(trainTypeDO.getDamageCodes()));
+        trainType.setTrainParts(convertToTrainParts(trainTypeDO.getTrainParts()));
 
-
-        return null;
+        return trainType;
 
     }
 
@@ -88,8 +86,13 @@ public class TrainManagerImpl implements TrainManager {
         return damageCode;
     }
 
-    private TrainParts convertToTrainParts(List<TrainPartDO> trainPartDOs) {
+    private List<TrainPart> convertToTrainParts(List<TrainPartDO> trainPartDOs) {
+        List<TrainPart> trainParts = new ArrayList<>();
+        for(TrainPartDO trainPartDO : trainPartDOs) {
+            trainParts.add(convertToTrainPart(trainPartDO));
+        }
 
+        return trainParts;
     }
 
     private TrainPart convertToTrainPart(TrainPartDO trainPartDO) {
