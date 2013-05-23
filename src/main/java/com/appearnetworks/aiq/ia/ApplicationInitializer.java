@@ -2,18 +2,17 @@ package com.appearnetworks.aiq.ia;
 
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageReportDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
-import com.appearnetworks.aiq.ia.dataaccess.model.*;
+import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
+import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 /**
- * @author Qambber Hussain, Appear Networks.
+ * This class initializes the application with initial data.
  */
 @Component
 public class ApplicationInitializer implements InitializingBean {

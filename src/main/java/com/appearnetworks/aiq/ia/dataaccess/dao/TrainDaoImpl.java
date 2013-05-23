@@ -17,15 +17,16 @@ public class TrainDaoImpl implements TrainDao {
 
     @Override
     public void create(TrainDO trainDO) {
+        //TODO Throw error if train already exists.
         trainMap.put(trainDO.getId(), trainDO);
     }
 
     @Override
-    public TrainDO find(String trainId) throws NoSuchDataObjectException {
-        if(trainMap.containsKey(trainId)) {
-            return trainMap.get(trainId);
+    public TrainDO find(String id) throws NoSuchDataObjectException {
+        if(trainMap.containsKey(id)) {
+            return trainMap.get(id);
         } else {
-            throw new NoSuchDataObjectException("Train with id [" + trainId + " ] not found.");
+            throw new NoSuchDataObjectException();
         }
     }
 

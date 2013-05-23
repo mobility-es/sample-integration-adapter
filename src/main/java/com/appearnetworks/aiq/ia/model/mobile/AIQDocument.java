@@ -1,9 +1,9 @@
 package com.appearnetworks.aiq.ia.model.mobile;
 
 /**
- * Document in AIQ data sync.
+ * Document in AIQ data sync. All data is intended to be used with the data sync system must have _id, _rev and _type
+ * fields. Business object that are to be used with data sync must therefore extend from this object.
  *
- * @author Qambber Hussain, Appear Networks.
  */
 public abstract class AIQDocument {
     private String _id;

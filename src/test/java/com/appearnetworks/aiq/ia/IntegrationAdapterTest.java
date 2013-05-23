@@ -1,8 +1,8 @@
 package com.appearnetworks.aiq.ia;
 
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
-import com.appearnetworks.aiq.ia.dataaccess.manager.TrainDamageReportManager;
-import com.appearnetworks.aiq.ia.dataaccess.manager.TrainManager;
+import com.appearnetworks.aiq.ia.manager.TrainDamageReportManager;
+import com.appearnetworks.aiq.ia.manager.TrainManager;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;

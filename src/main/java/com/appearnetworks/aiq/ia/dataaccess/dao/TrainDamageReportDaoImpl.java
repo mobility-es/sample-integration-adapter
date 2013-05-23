@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * Implementation of <code>TrainDamageReportDao</code> which stores train damage reports in memory.
  *
  */
 @Repository
@@ -19,6 +20,7 @@ public class TrainDamageReportDaoImpl implements TrainDamageReportDao {
 
     @Override
     public TrainDamageReportDO create(TrainDamageReportDO trainDamageReportDO) {
+        //TODO throw error if train already exists.
         trainDamageReportMap.put(trainDamageReportDO.getId(), trainDamageReportDO);
         return trainDamageReportDO;
     }
@@ -29,11 +31,11 @@ public class TrainDamageReportDaoImpl implements TrainDamageReportDao {
     }
 
     @Override
-    public TrainDamageReportDO find(String trainDamageReportId) throws NoSuchDataObjectException{
-        if(trainDamageReportMap.containsKey(trainDamageReportId)) {
-            return trainDamageReportMap.get(trainDamageReportId);
+    public TrainDamageReportDO find(String id) throws NoSuchDataObjectException{
+        if(trainDamageReportMap.containsKey(id)) {
+            return trainDamageReportMap.get(id);
         } else {
-            throw new NoSuchDataObjectException("Train damage report with id [" + trainDamageReportId + " ] not found.");
+            throw new NoSuchDataObjectException();
         }
     }
 }
