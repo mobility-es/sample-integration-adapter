@@ -20,7 +20,6 @@ public class TrainDamageReportDaoImpl implements TrainDamageReportDao {
 
     @Override
     public TrainDamageReportDO create(TrainDamageReportDO trainDamageReportDO) {
-        //TODO throw error if train already exists.
         trainDamageReportMap.put(trainDamageReportDO.getId(), trainDamageReportDO);
         return trainDamageReportDO;
     }
