@@ -3,7 +3,7 @@ package com.appearnetworks.aiq.ia.dataaccess.model;
 import java.util.Date;
 
 /**
- * @author Qambber Hussain, Appear Networks.
+ * Data object for train damage report
  */
 public class TrainDamageReportDO extends DataObject {
     private Long rev;

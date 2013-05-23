@@ -151,6 +151,9 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.0.3.v20130506</version>
+                <configuration>
+                    <contextPath>/</contextPath>
+                </configuration>
             </plugin>
         </plugins>
     </build>
