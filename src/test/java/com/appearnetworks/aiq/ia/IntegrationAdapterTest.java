@@ -3,10 +3,8 @@ package com.appearnetworks.aiq.ia;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
 import com.appearnetworks.aiq.ia.dataaccess.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.dataaccess.manager.TrainManager;
-import com.appearnetworks.aiq.ia.model.mobile.DamageCode;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
-import com.appearnetworks.aiq.ia.model.mobile.TrainType;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
 import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapter;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -80,29 +78,13 @@ public class IntegrationAdapterTest {
     }
 
     private void createTrainDamageReport() {
-        trainDamageReport = new TrainDamageReport("10",
-                                                    1L,
-                                                    "1",
-                                                    "L1",
-                                                    "L2",
-                                                    "L3",
-                                                    "Part1",
-                                                    "Code1",
-                                                    "Head",
-                                                    "Some damage",
-                                                    "Appear",
-                                                    new Date(),
-                                                    "New Cause",
-                                                    "Long operation");
+        trainDamageReport = new TrainDamageReport("10", 1L, "1", "Some damage", "Appear", new Date());
 
     }
 
     private void createTrains() {
-        TrainType trainType1 = new TrainType();
-        trainType1.setDamageCodes(Collections.singletonList(new DamageCode()));
-
-        train1 = new Train("1", 1L, 200L, trainType1);
-        train2 = new Train("2", 1L, 500L, trainType1);
+        train1 = new Train("1", 1L, 200L);
+        train2 = new Train("2", 1L, 500L);
     }
 
     private List<TrainDamageReport> getSomeTrainDamageReports() {

@@ -4,7 +4,6 @@ import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
 import com.appearnetworks.aiq.ia.dataaccess.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.dataaccess.manager.TrainManager;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
-import com.appearnetworks.aiq.ia.model.mobile.TrainDamageImageRef;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
 import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapterBase;
@@ -44,20 +43,6 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         return documentReferences;
     }
 
-    private List<DocumentReference> fetchAllTrainDamageReportsImages(String userId, String deviceId) {
-        List<TrainDamageImageRef> trainDamageImageRefs = trainDamageReportManager.getTrainDamageImagesByUserIdAndDeviceId(userId, deviceId);
-        List<DocumentReference> documentReferences = new ArrayList<>();
-
-        for (TrainDamageImageRef trainDamageImageRef : trainDamageImageRefs) {
-            documentReferences.add(new DocumentReference(
-                    trainDamageImageRef.get_id(),
-                    TrainDamageImageRef.DOC_TYPE,
-                    trainDamageImageRef.get_rev()));
-        }
-
-        return documentReferences;
-    }
-
     private List<DocumentReference> fetchAllTrainDamageReports() {
         List<TrainDamageReport> trainDamageReports = trainDamageReportManager.getAll();
         List<DocumentReference> documentReferences = new ArrayList<>();
@@ -91,8 +76,6 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
                 return fetchTrainDocument(docId);
             case TrainDamageReport.DOC_TYPE:
                 return fetchTrainDamageReportDocument(docId);
-            case TrainDamageImageRef.DOC_TYPE:
-                return fetchTrainDamageImageDocument(docId);
             default:
                 return super.retrieveDocument(docType, docId);
         }
@@ -115,16 +98,6 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
             default:
                 return super.insertDocument(userId, deviceId, docRef, doc);
         }
-    }
-
-    private ObjectNode fetchTrainDamageImageDocument(String docId) {
-        try {
-            TrainDamageImageRef trainDamageImageRef = trainDamageReportManager.findTrainDamageImageById(docId);
-        } catch (NoSuchDataObjectException e) {
-            LOG.log(Level.WARNING, "Train damage report with id:" + docId + " not found.", e);
-        }
-
-        return null;
     }
 
     private ObjectNode fetchTrainDamageReportDocument(String docId) {

@@ -11,6 +11,4 @@ import java.util.List;
 public interface TrainManager {
     Train find(String trainId) throws NoSuchDataObjectException;
     List<Train> getAll();
-
-
 }

@@ -8,14 +8,9 @@ import java.util.Date;
 public class TrainDamageReportDO extends DataObject {
     private Long rev;
     private TrainDO train;
-    private SelectedDamageCodeDO damageCode;
-    private TrainPartDO trainPart;
-    private String heading;
     private String damageText;
     private String reportedBy;
     private Date damageDateTime;
-    private String damageCause;
-    private String operation;
 
     public TrainDamageReportDO() {
         this.rev = 1L;
@@ -35,22 +30,6 @@ public class TrainDamageReportDO extends DataObject {
 
     public void setTrain(TrainDO train) {
         this.train = train;
-    }
-
-    public TrainPartDO getTrainPart() {
-        return trainPart;
-    }
-
-    public void setTrainPart(TrainPartDO trainPart) {
-        this.trainPart = trainPart;
-    }
-
-    public String getHeading() {
-        return heading;
-    }
-
-    public void setHeading(String heading) {
-        this.heading = heading;
     }
 
     public String getDamageText() {
@@ -75,29 +54,5 @@ public class TrainDamageReportDO extends DataObject {
 
     public void setDamageDateTime(Date damageDateTime) {
         this.damageDateTime = damageDateTime;
-    }
-
-    public String getDamageCause() {
-        return damageCause;
-    }
-
-    public void setDamageCause(String damageCause) {
-        this.damageCause = damageCause;
-    }
-
-    public String getOperation() {
-        return operation;
-    }
-
-    public void setOperation(String operation) {
-        this.operation = operation;
-    }
-
-    public SelectedDamageCodeDO getDamageCode() {
-        return damageCode;
-    }
-
-    public void setDamageCode(SelectedDamageCodeDO damageCode) {
-        this.damageCode = damageCode;
     }
 }
