@@ -6,7 +6,6 @@ import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.List;
 /**
  * This class initializes the application with initial data.
  */
-@Component
 public class ApplicationInitializer implements InitializingBean {
 
     @Autowired

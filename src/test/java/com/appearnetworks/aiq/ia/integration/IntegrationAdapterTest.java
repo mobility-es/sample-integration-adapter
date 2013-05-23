@@ -13,10 +13,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/META-INF/testApplicationContext.xml" })
@@ -31,25 +38,48 @@ public class IntegrationAdapterTest {
     @Autowired
     private TrainDamageReportManager trainDamageReportManager;
 
+    private TrainDO trainDO;
+
     @Before
     public void setup(){
-        TrainDO trainDO = new TrainDO(2000L);
-        trainDao.create(trainDO);
+        trainDao.create(new TrainDO(2000L));
+        trainDO = trainDao.getAll().get(0);
     }
 
 
+    @DirtiesContext
     @Test
     public void addAndGetTrainDamageReport() throws UpdateException, IOException {
 
         integrationAdapter.insertDocument("UserId",
                 "DeviceId",
                 new DocumentReference("", TrainDamageReport.DOC_TYPE, 0L),
-                createTrainDamageReport());
+                createTrainDamageReport(trainDO.getId()));
+
+        List<TrainDamageReport> trainDamageReports = new ArrayList<>();
+
+        List<DocumentReference> documentReferences = integrationAdapter.findByUserAndDevice("userId", "deviceId");
+        for (DocumentReference documentReference : documentReferences) {
+            if(documentReference._type.equals(TrainDamageReport.DOC_TYPE)){
+                trainDamageReports.add(new ObjectMapper().readValue(
+                        integrationAdapter.retrieveDocument(documentReference._type, documentReference._id),
+                        TrainDamageReport.class
+                ));
+            }
+        }
+
+        assertFalse(trainDamageReports.isEmpty());
+        assertTrue(trainDamageReports.size() == 1);
+
+        TrainDamageReport createTrainDamageReport = trainDamageReports.get(0);
+        assertNotNull(createTrainDamageReport);
+        assertFalse(createTrainDamageReport.get_id().isEmpty());
+        assertTrue(createTrainDamageReport.get_rev() == 1L);
     }
 
-    private ObjectNode createTrainDamageReport() throws IOException {
+    private ObjectNode createTrainDamageReport(String trainId) throws IOException {
         return (ObjectNode) new ObjectMapper().readTree("{\n" +
-                "   \"trainId\":\"123-1233\",\n" +
+                "   \"trainId\":\"" + trainId + "\",\n" +
                 "   \"description\":\"Passenger train\",\n" +
                 "   \"reportedBy\":\"Alex\",\n" +
                 "   \"creationDateTime\":1369310662\n" +

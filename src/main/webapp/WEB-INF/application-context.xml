@@ -27,4 +27,6 @@
 
     <context:property-placeholder location="classpath:aiq.properties" />
 
+    <bean class="com.appearnetworks.aiq.ia.ApplicationInitializer"/>
+
 </beans>
