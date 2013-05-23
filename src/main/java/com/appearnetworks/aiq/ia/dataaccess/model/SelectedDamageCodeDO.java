@@ -1,6 +1,8 @@
 package com.appearnetworks.aiq.ia.dataaccess.model;
 
-
+/**
+ * @author Qambber Hussain, Appear Networks.
+ */
 public class SelectedDamageCodeDO extends DataObject {
     private String level1;
     private String level2;
