@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  * between the devices and the integration adapter takes place through the platform. The platform is configured to
  * reach the integration adapter through this endpoint.
  *
- * The protocol between the platform and integration adapter is well defined is used the extending the relevant
+ * The protocol between the platform and integration adapter is well defined and is used by extending the relevant
  * interfaces.
  *
  */

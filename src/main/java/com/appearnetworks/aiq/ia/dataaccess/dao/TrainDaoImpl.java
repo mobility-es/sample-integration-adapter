@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author Qambber Hussain, Appear Networks.
+ * Implementation of <code>TrainDao</code> which stores train damage reports in memory.
  */
 @Repository
 public class TrainDaoImpl implements TrainDao {
@@ -17,7 +17,6 @@ public class TrainDaoImpl implements TrainDao {
 
     @Override
     public void create(TrainDO trainDO) {
-        //TODO Throw error if train already exists.
         trainMap.put(trainDO.getId(), trainDO);
     }
 
