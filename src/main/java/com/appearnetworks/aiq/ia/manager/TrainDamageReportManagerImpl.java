@@ -39,8 +39,8 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
                             "No train found for id [" + trainDamageReport.getTrainId() + "] in the train damage report."));
         }
 
-        trainDamageReportDO.setDamageDateTime(trainDamageReport.getDamageDateTime());
-        trainDamageReportDO.setDamageText(trainDamageReport.getDamageText());
+        trainDamageReportDO.setCreationDateTime(trainDamageReport.getCreationDateTime());
+        trainDamageReportDO.setDescription(trainDamageReport.getDescription());
         trainDamageReportDO.setReportedBy(trainDamageReport.getReportedBy());
         trainDamageReportDO.setTrain(trainDO);
 
@@ -67,9 +67,9 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
         return new TrainDamageReport(trainDamageReportDO.getId(),
                 trainDamageReportDO.getRev(),
                 trainDamageReportDO.getTrain().getId(),
-                trainDamageReportDO.getDamageText(),
+                trainDamageReportDO.getDescription(),
                 trainDamageReportDO.getReportedBy(),
-                trainDamageReportDO.getDamageDateTime());
+                trainDamageReportDO.getCreationDateTime());
     }
 
     private List<TrainDamageReport> convertToTrainDamageReports(List<TrainDamageReportDO> trainDamageReportDOs) {

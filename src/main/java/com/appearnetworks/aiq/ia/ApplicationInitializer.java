@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 /**
  * This class initializes the application with initial data.
  */
-@Component
 public class ApplicationInitializer implements InitializingBean {
     public static final Logger LOG = LoggerFactory.getLogger(ApplicationInitializer.class);
 
@@ -42,8 +40,8 @@ public class ApplicationInitializer implements InitializingBean {
         for (TrainDO trainDO : trainDOs) {
             TrainDamageReportDO trainDamageReportDO = new TrainDamageReportDO();
 
-            trainDamageReportDO.setDamageDateTime(new Date());
-            trainDamageReportDO.setDamageText("Should be fixed");
+            trainDamageReportDO.setCreationDateTime(new Date());
+            trainDamageReportDO.setDescription("Should be fixed");
             trainDamageReportDO.setReportedBy("Alex");
             trainDamageReportDO.setTrain(trainDO);
 

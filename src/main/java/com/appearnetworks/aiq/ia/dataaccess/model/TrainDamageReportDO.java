@@ -8,9 +8,9 @@ import java.util.Date;
 public class TrainDamageReportDO extends DataObject {
     private Long rev;
     private TrainDO train;
-    private String damageText;
+    private String description;
     private String reportedBy;
-    private Date damageDateTime;
+    private Date creationDateTime;
 
     public TrainDamageReportDO() {
         this.rev = 1L;
@@ -32,12 +32,12 @@ public class TrainDamageReportDO extends DataObject {
         this.train = train;
     }
 
-    public String getDamageText() {
-        return damageText;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDamageText(String damageText) {
-        this.damageText = damageText;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getReportedBy() {
@@ -48,11 +48,11 @@ public class TrainDamageReportDO extends DataObject {
         this.reportedBy = reportedBy;
     }
 
-    public Date getDamageDateTime() {
-        return damageDateTime;
+    public Date getCreationDateTime() {
+        return creationDateTime;
     }
 
-    public void setDamageDateTime(Date damageDateTime) {
-        this.damageDateTime = damageDateTime;
+    public void setCreationDateTime(Date creationDateTime) {
+        this.creationDateTime = creationDateTime;
     }
 }
