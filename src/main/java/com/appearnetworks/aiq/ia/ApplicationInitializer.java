@@ -62,27 +62,40 @@ public class ApplicationInitializer implements InitializingBean {
     }
 
     private void createTrains() {
-        SubCode2DO subCode2DO1 = new SubCode2DO("1", "sc1sc21");
-        SubCode2DO subCode2DO2 = new SubCode2DO("1", "sc1sc22");
-        List<SubCode2DO> subCode2DOs = new ArrayList<>();
-        subCode2DOs.add(subCode2DO1);
-        subCode2DOs.add(subCode2DO2);
-        SubCode1DO subCode1DO1 = new SubCode1DO("sc1", subCode2DOs);
+        SubCode2DO subCode2DO1 = new SubCode2DO("1", "sc21");
+        SubCode2DO subCode2DO2 = new SubCode2DO("1", "sc22");
+        List<SubCode2DO> sc11SubCode2DOs = new ArrayList<>();
+        sc11SubCode2DOs.add(subCode2DO1);
+        sc11SubCode2DOs.add(subCode2DO2);
+        SubCode1DO subCode1DO1 = new SubCode1DO("sc11", sc11SubCode2DOs);
 
-        SubCode2DO subCode2DO2 = new SubCode2DO("1", "sc1sc23");
-        SubCode2DO subCode2DO2 = new SubCode2DO("1", "sc1sc24");
-        List<SubCode2DO> subCode2DOs = new ArrayList<>();
-        subCode2DOs.add(subCode2DO1);
-        subCode2DOs.add(subCode2DO2);
-        SubCode1DO subCode1DO1 = new SubCode1DO("l21", subCode2DOs);
+        SubCode2DO subCode2DO3 = new SubCode2DO("1", "sc23");
+        SubCode2DO subCode2DO4 = new SubCode2DO("1", "sc24");
+        List<SubCode2DO> sc12SubCode2DOs = new ArrayList<>();
+        sc12SubCode2DOs.add(subCode2DO3);
+        sc11SubCode2DOs.add(subCode2DO4);
+        SubCode1DO subCode1DO2 = new SubCode1DO("sc12", sc12SubCode2DOs);
+
+        List<SubCode1DO> dc1SubCode1DOs = new ArrayList<>();
+        dc1SubCode1DOs.add(subCode1DO1);
+        dc1SubCode1DOs.add(subCode1DO2);
+        DamageCodeDO damageCodeDO1 = new DamageCodeDO("dc1", dc1SubCode1DOs);
 
 
-        DamageCodeDO damageCodeDO1 = new DamageCodeDO("l11", Collections.singletonList(subCode1DO));
 
 
-        DamageCodeDO damageCodeDO2 = new DamageCodeDO("l21", "l22", "l23", "2");
-        DamageCodeDO damageCodeDO3 = new DamageCodeDO("l31", "l32", "l33", "1");
-        DamageCodeDO damageCodeDO4 = new DamageCodeDO("l41", "l42", "l23", "2");
+        SubCode2DO subCode2DO5 = new SubCode2DO("2", "sc25");
+        List<SubCode2DO> sc13SubCode2DOs = Collections.singletonList(subCode2DO5);
+        SubCode1DO subCode1DO3 = new SubCode1DO("sc13", sc13SubCode2DOs);
+
+        SubCode2DO subCode2DO6 = new SubCode2DO("2", "sc26");
+        List<SubCode2DO> sc14SubCode2DOs = Collections.singletonList(subCode2DO6);
+        SubCode1DO subCode1DO4 = new SubCode1DO("sc14", sc13SubCode2DOs);
+
+        List<SubCode1DO> dc2SubCode1DOs = new ArrayList<>();
+        dc2SubCode1DOs.add(subCode1DO3);
+        dc2SubCode1DOs.add(subCode1DO4);
+        DamageCodeDO damageCodeDO2 = new DamageCodeDO("dc2", dc2SubCode1DOs);
 
         TrainPartDO trainPartDO1 = new TrainPartDO("tp1", "tpv1");
         TrainPartDO trainPartDO2 = new TrainPartDO("tp2", "tpv2");
@@ -107,8 +120,8 @@ public class ApplicationInitializer implements InitializingBean {
         trainTypeDO2.setName("trainType2");
 
         List<DamageCodeDO> trainTypeDO2damageCodes = new ArrayList<>();
-        trainTypeDO2damageCodes.add(damageCodeDO3);
-        trainTypeDO1damageCodes.add(damageCodeDO4);
+        trainTypeDO2damageCodes.add(damageCodeDO1);
+        trainTypeDO1damageCodes.add(damageCodeDO2);
         trainTypeDO2.setDamageCodes(trainTypeDO2damageCodes);
 
         List<TrainPartDO> trainTypeDO2trainParts = new ArrayList<>();
@@ -129,4 +142,6 @@ public class ApplicationInitializer implements InitializingBean {
         trainDao.create(new TrainDO(9L, trainTypeDO2));
         trainDao.create(new TrainDO(10L, trainTypeDO2));
     }
+
+
 }
