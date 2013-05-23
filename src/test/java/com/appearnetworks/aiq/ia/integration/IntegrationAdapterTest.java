@@ -2,7 +2,7 @@ package com.appearnetworks.aiq.ia.integration;
 
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
-import com.appearnetworks.aiq.ia.manager.TrainDamageReportManager;
+import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
 import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapter;
@@ -21,9 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/META-INF/testApplicationContext.xml" })
@@ -35,32 +33,43 @@ public class IntegrationAdapterTest {
     @Autowired
     private TrainDao trainDao;
 
-    @Autowired
-    private TrainDamageReportManager trainDamageReportManager;
 
-    private TrainDO trainDO;
+    private TrainDO testTrainDO;
 
     @Before
     public void setup(){
         trainDao.create(new TrainDO(2000L));
-        trainDO = trainDao.getAll().get(0);
+        testTrainDO = trainDao.getAll().get(0);
     }
 
+    @Test
+    public void retrieveAddedTrainDocument() throws IOException {
+        List<DocumentReference> documentReferences = integrationAdapter.findByUserAndDevice("userId", "DeviceId");
+        assertFalse(documentReferences.isEmpty());
+        assertTrue(documentReferences.size() == 1);
+
+        DocumentReference documentReference = documentReferences.get(0);
+        assertEquals(Train.DOC_TYPE, documentReference._type);
+
+        Train train = new ObjectMapper().readValue(integrationAdapter.retrieveDocument(Train.DOC_TYPE, documentReference._id),
+                                                   Train.class);
+        assertNotNull(train);
+        assertEquals(train.getNumber(), testTrainDO.getNumber());
+    }
 
     @DirtiesContext
     @Test
     public void addAndGetTrainDamageReport() throws UpdateException, IOException {
-
         integrationAdapter.insertDocument("UserId",
                 "DeviceId",
                 new DocumentReference("", TrainDamageReport.DOC_TYPE, 0L),
-                createTrainDamageReport(trainDO.getId()));
+                createTrainDamageReport(testTrainDO.getId()));
 
         List<TrainDamageReport> trainDamageReports = new ArrayList<>();
 
         List<DocumentReference> documentReferences = integrationAdapter.findByUserAndDevice("userId", "deviceId");
         for (DocumentReference documentReference : documentReferences) {
-            if(documentReference._type.equals(TrainDamageReport.DOC_TYPE)){
+            if(documentReference._type.equals(TrainDamageReport.DOC_TYPE)) {
                 trainDamageReports.add(new ObjectMapper().readValue(
                         integrationAdapter.retrieveDocument(documentReference._type, documentReference._id),
                         TrainDamageReport.class
