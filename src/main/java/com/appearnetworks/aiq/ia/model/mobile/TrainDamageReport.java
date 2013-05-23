@@ -11,9 +11,9 @@ public class TrainDamageReport extends AIQDocument {
     public static final String DOC_ID_PREFIX = "_TrainDamageReport_";
 
     private String trainId;
-    private String damageText;
+    private String description;
     private String reportedBy;
-    private Date damageDateTime;
+    private Date creationDateTime;
 
     public TrainDamageReport() {
     }
@@ -21,30 +21,30 @@ public class TrainDamageReport extends AIQDocument {
     public TrainDamageReport(String _id,
                              long _rev,
                              String trainId,
-                             String damageText,
+                             String description,
                              String reportedBy,
-                             Date damageDateTime) {
+                             Date creationDateTime) {
 
         super(_id, _rev, DOC_TYPE);
         this.trainId = trainId;
-        this.damageText = damageText;
+        this.description = description;
         this.reportedBy = reportedBy;
-        this.damageDateTime = damageDateTime;
+        this.creationDateTime = creationDateTime;
     }
 
     public String getTrainId() {
         return trainId;
     }
 
-    public String getDamageText() {
-        return damageText;
+    public String getDescription() {
+        return description;
     }
 
     public String getReportedBy() {
         return reportedBy;
     }
 
-    public Date getDamageDateTime() {
-        return damageDateTime;
+    public Date getCreationDateTime() {
+        return creationDateTime;
     }
 }

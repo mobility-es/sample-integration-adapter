@@ -7,8 +7,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -37,8 +35,8 @@ public class ApplicationInitializer implements InitializingBean {
         for (TrainDO trainDO : trainDOs) {
             TrainDamageReportDO trainDamageReportDO = new TrainDamageReportDO();
 
-            trainDamageReportDO.setDamageDateTime(new Date());
-            trainDamageReportDO.setDamageText("Should be fixed");
+            trainDamageReportDO.setCreationDateTime(new Date());
+            trainDamageReportDO.setDescription("Should be fixed");
             trainDamageReportDO.setReportedBy("Alex");
             trainDamageReportDO.setTrain(trainDO);
 
