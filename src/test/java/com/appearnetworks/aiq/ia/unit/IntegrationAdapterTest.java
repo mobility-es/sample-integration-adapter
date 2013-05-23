@@ -1,5 +1,6 @@
-package com.appearnetworks.aiq.ia;
+package com.appearnetworks.aiq.ia.unit;
 
+import com.appearnetworks.aiq.ia.IntegrationAdapterImpl;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
 import com.appearnetworks.aiq.ia.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.manager.TrainManager;
