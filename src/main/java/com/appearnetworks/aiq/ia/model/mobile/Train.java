@@ -1,7 +1,8 @@
 package com.appearnetworks.aiq.ia.model.mobile;
 
 /**
- *
+ * This object represent train data and acts as the data transfer object in the system. Jackson is used to convert this
+ * object to JSON and vice versa.
  */
 public class Train extends AIQDocument {
 
@@ -11,7 +12,7 @@ public class Train extends AIQDocument {
     private Long number;
 
     /**
-     * Needed for Jackson deserialization
+     * Needed for Jackson de-serialization
      */
     public Train() {}
 

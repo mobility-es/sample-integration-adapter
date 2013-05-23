@@ -8,28 +8,31 @@ import com.appearnetworks.aiq.ia.model.mobile.Train;
 import java.util.List;
 
 /**
- * This interface is used for CRUD operations related to trains.
+ * To be used for CRUD operations related to train damage reports.
  *
- * @author Qambber Hussain, Appear Networks.
  */
 public interface TrainDao {
 
     /**
-     * Create a new train
-     * @param train
-     */
-    void create(TrainDO train);
-
-    /**
+     * Method to create a new train.
      *
-     * @param trainId
-     * @return
+     * @param trainDO This object contains train data that is to be persisted.
      */
-    TrainDO find(String trainId) throws NoSuchDataObjectException;
+    void create(TrainDO trainDO);
 
     /**
-     * Get all trains
-     * @return
+     * Method to find a train by its ID.
+     *
+     * @param id the id of the train.
+     * @return the persisted train object
+     * @throws NoSuchDataObjectException
+     */
+    TrainDO find(String id) throws NoSuchDataObjectException;
+
+    /**
+     * Method to return all trains.
+     *
+     * @return a list of all trains.
      */
     List<TrainDO> getAll();
 }

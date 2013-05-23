@@ -1,9 +1,11 @@
-package com.appearnetworks.aiq.ia.dataaccess.manager;
+package com.appearnetworks.aiq.ia.manager;
 
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageReportDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
+import com.appearnetworks.aiq.ia.manager.exception.TrainDamageReportNotFoundException;
 import com.appearnetworks.aiq.ia.dataaccess.model.*;
+import com.appearnetworks.aiq.ia.manager.exception.TrainNotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,13 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Qambber Hussain, Appear Networks.
+ * Implementation of <code>TrainDamageReportManager</code>
+ *
  */
 @Component
 public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
 
     @Autowired
-    private TrainDamageReportDao trainDamageDao;
+    private TrainDamageReportDao trainDamageReportDao;
+
     @Autowired
     private TrainDao trainDao;
 
@@ -30,7 +34,9 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
         try {
             trainDO = trainDao.find(trainDamageReport.getTrainId());
         } catch (NoSuchDataObjectException e) {
-            throw new IllegalArgumentException("Invalid train damage report.");
+            throw new IllegalArgumentException(
+                    new TrainNotFoundException(
+                            "No train found for id [" + trainDamageReport.getTrainId() + "] in the train damage report."));
         }
 
         trainDamageReportDO.setCreationDateTime(trainDamageReport.getCreationDateTime());
@@ -38,20 +44,23 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
         trainDamageReportDO.setReportedBy(trainDamageReport.getReportedBy());
         trainDamageReportDO.setTrain(trainDO);
 
-
-
-
-        return convertToTrainDamageReport(trainDamageDao.create(trainDamageReportDO));
+        return convertToTrainDamageReport(trainDamageReportDao.create(trainDamageReportDO));
     }
 
     @Override
-    public TrainDamageReport find(String trainDamageReportId) throws NoSuchDataObjectException {
-        return convertToTrainDamageReport(trainDamageDao.find(trainDamageReportId));
+    public TrainDamageReport find(String id) throws TrainDamageReportNotFoundException {
+        try {
+            TrainDamageReportDO trainDamageReportDO = trainDamageReportDao.find(id);
+            return convertToTrainDamageReport(trainDamageReportDO);
+        } catch (NoSuchDataObjectException e) {
+            throw new TrainDamageReportNotFoundException("Train damage report not found for id [" + id + "]");
+        }
+
     }
 
     @Override
     public List<TrainDamageReport> getAll() {
-        return convertToTrainDamageReports(trainDamageDao.getAll());
+        return convertToTrainDamageReports(trainDamageReportDao.getAll());
     }
 
     private TrainDamageReport convertToTrainDamageReport(TrainDamageReportDO trainDamageReportDO) {

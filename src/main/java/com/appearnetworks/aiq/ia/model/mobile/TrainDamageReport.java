@@ -3,7 +3,8 @@ package com.appearnetworks.aiq.ia.model.mobile;
 import java.util.Date;
 
 /**
- *
+ * This object represent train data and acts as the data transfer object in the system. Jackson is used to convert this
+ * object to JSON and vice versa.
  */
 public class TrainDamageReport extends AIQDocument {
 
@@ -15,8 +16,10 @@ public class TrainDamageReport extends AIQDocument {
     private String reportedBy;
     private Date creationDateTime;
 
-    public TrainDamageReport() {
-    }
+    /**
+     * Needed for Jackson de-serialization
+     */
+    public TrainDamageReport() {}
 
     public TrainDamageReport(String _id,
                              long _rev,
