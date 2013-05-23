@@ -1,8 +1,8 @@
 package com.appearnetworks.aiq.ia.integration;
 
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
-import com.appearnetworks.aiq.ia.dataaccess.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
+import com.appearnetworks.aiq.ia.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
 import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapter;
