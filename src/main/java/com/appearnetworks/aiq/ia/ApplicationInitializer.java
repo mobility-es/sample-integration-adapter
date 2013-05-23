@@ -4,6 +4,8 @@ import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageReportDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,11 +13,13 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.List;
 
+
 /**
  * This class initializes the application with initial data.
  */
 @Component
 public class ApplicationInitializer implements InitializingBean {
+    public static final Logger LOG = LoggerFactory.getLogger(ApplicationInitializer.class);
 
     @Autowired
     private TrainDao trainDao;
@@ -26,6 +30,8 @@ public class ApplicationInitializer implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        LOG.info("Initializing application with train and train damage reports...");
+
         createTrains();
         createTrainDamages();
     }

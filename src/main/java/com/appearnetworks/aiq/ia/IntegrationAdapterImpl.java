@@ -1,6 +1,5 @@
 package com.appearnetworks.aiq.ia;
 
-import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
 import com.appearnetworks.aiq.ia.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.manager.TrainManager;
 import com.appearnetworks.aiq.ia.manager.exception.TrainDamageReportNotFoundException;
@@ -12,14 +11,13 @@ import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapte
 import com.appearnetworks.aiq.integrationframework.integration.UpdateException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * An implementation of <code>IntegrationAdapterBase</code>. This class overrides many methods on integration adapter
@@ -33,7 +31,7 @@ import java.util.logging.Logger;
  */
 @Component
 public class IntegrationAdapterImpl extends IntegrationAdapterBase {
-    private static Logger LOG = Logger.getLogger(IntegrationAdapterImpl.class.getName());
+    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ApplicationInitializer.class);
 
     @Autowired
     private TrainManager trainManager;
@@ -67,7 +65,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
             documentReferences.addAll(fetchAllTrains());
             documentReferences.addAll(fetchAllTrainDamageReports());
         } catch (Exception e){
-            LOG.log(Level.WARNING, "Unexpected exception when retrieving documents", e);
+            LOG.warn("Unexpected exception when retrieving documents", e);
             throw e;
         }
 
@@ -157,7 +155,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
 
             return mapper.valueToTree(trainDamageReport);
         } catch (TrainDamageReportNotFoundException e) {
-            LOG.log(Level.WARNING, e.toString());
+            LOG.warn(e.toString());
         }
 
         return null;
@@ -170,7 +168,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
 
             return mapper.valueToTree(train);
         } catch (TrainNotFoundException e) {
-            LOG.log(Level.WARNING, e.toString());
+            LOG.warn(e.toString());
         }
 
         return null;

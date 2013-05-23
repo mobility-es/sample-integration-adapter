@@ -4,6 +4,7 @@ import com.appearnetworks.aiq.ia.IntegrationAdapterImpl;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
 import com.appearnetworks.aiq.ia.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.manager.TrainManager;
+import com.appearnetworks.aiq.ia.manager.exception.TrainNotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
@@ -68,7 +69,7 @@ public class IntegrationAdapterTest {
     }
 
     @Test
-    public void retrieveDocument() throws NoSuchDataObjectException, IOException {
+    public void retrieveDocument() throws TrainNotFoundException, IOException {
         when(trainManagerMock.find(train1.get_id())).thenReturn(train1);
 
         ObjectNode objectNode = integrationAdapter.retrieveDocument(Train.DOC_TYPE, Train.DOC_ID_PREFIX + train1.get_id());
