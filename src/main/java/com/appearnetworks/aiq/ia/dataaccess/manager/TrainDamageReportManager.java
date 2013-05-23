@@ -10,7 +10,7 @@ import java.util.List;
  * @author Qambber Hussain, Appear Networks.
  */
 public interface TrainDamageReportManager {
-    void create(TrainDamageReport trainDamageReport);
+    TrainDamageReport create(TrainDamageReport trainDamageReport);
     void createTrainDamageImage(TrainDamageImageRef trainDamageImageRef, String id, String userId, String deviceId);
     long updateTrainDamageImage(String id, String name, String contentType, byte[] data);
     List<TrainDamageImageRef> getTrainDamageImagesByUserIdAndDeviceId(String userId, String deviceId);

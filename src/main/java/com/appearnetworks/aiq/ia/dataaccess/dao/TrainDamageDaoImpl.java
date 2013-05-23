@@ -24,8 +24,9 @@ public class TrainDamageDaoImpl implements TrainDamageDao {
     private TrainDao trainDao;
 
     @Override
-    public void create(TrainDamageReportDO trainDamageReportDO) {
+    public TrainDamageReportDO create(TrainDamageReportDO trainDamageReportDO) {
         trainDamageReportMap.put(trainDamageReportDO.getId(), trainDamageReportDO);
+        return trainDamageReportDO;
     }
 
     @Override

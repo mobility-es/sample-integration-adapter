@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface TrainDamageDao {
 
-    void create(TrainDamageReportDO trainDamageReportDO);
+    TrainDamageReportDO create(TrainDamageReportDO trainDamageReportDO);
     void createAttachment(TrainDamageImageDO trainDamageImageDO);
     List<TrainDamageImageDO> getAttachmentsByUserIdAndDeviceId(String userId, String deviceId);
     long updateAttachment(String id, String name, String contentType, byte[] data);

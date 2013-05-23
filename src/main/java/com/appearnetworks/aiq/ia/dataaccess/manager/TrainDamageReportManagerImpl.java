@@ -24,7 +24,7 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
     private TrainDao trainDao;
 
     @Override
-    public void create(TrainDamageReport trainDamageReport) {
+    public TrainDamageReport create(TrainDamageReport trainDamageReport) {
         TrainDamageReportDO trainDamageReportDO = new TrainDamageReportDO();
         TrainDO trainDO = null;
 
@@ -54,7 +54,7 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
         TrainPartDO trainPartDO = findTrainPartDO(trainPartDOs, trainDamageReport);
         trainDamageReportDO.setTrainPart(trainPartDO);
 
-        trainDamageDao.create(trainDamageReportDO);
+        return convertToTrainDamageReport(trainDamageDao.create(trainDamageReportDO));
     }
 
     @Override

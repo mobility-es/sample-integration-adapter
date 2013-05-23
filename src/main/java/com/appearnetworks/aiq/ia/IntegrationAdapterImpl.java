@@ -8,11 +8,13 @@ import com.appearnetworks.aiq.ia.model.mobile.TrainDamageImageRef;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
 import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapterBase;
+import com.appearnetworks.aiq.integrationframework.integration.UpdateException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -93,6 +95,25 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
                 return fetchTrainDamageImageDocument(docId);
             default:
                 return super.retrieveDocument(docType, docId);
+        }
+    }
+
+    @Override
+    public long insertDocument(String userId, String deviceId, DocumentReference docRef, ObjectNode doc) throws UpdateException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        switch (docRef._type){
+            case TrainDamageReport.DOC_TYPE:
+                TrainDamageReport trainDamageReport;
+                try {
+                    trainDamageReport = mapper.readValue(doc, TrainDamageReport.class);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return trainDamageReportManager.create(trainDamageReport).get_rev();
+
+            default:
+                return super.insertDocument(userId, deviceId, docRef, doc);
         }
     }
 
