@@ -7,6 +7,7 @@ import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
 import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapter;
+import com.appearnetworks.aiq.integrationframework.integration.UpdateException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.junit.Before;
@@ -22,6 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class IntegrationAdapterTest {
@@ -75,6 +79,26 @@ public class IntegrationAdapterTest {
         assertEquals(train1.get_id(), train.get_id());
         assertEquals(train1.getNumber(), train.getNumber());
         assertEquals(train1.get_rev(), train.get_rev());
+    }
+
+    @Test
+    public void insertDocument() throws UpdateException {
+
+        when(trainDamageReportManagerMock.create(any(TrainDamageReport.class))).thenReturn(trainDamageReport);
+
+        long rev = integrationAdapter.insertDocument("user1",
+                "device1",
+                new DocumentReference("1", TrainDamageReport.DOC_TYPE, 1L),
+                createTrainDamageReportDocument());
+
+        verify(trainDamageReportManagerMock, times(1)).create(any(TrainDamageReport.class));
+        assertEquals(trainDamageReport.get_rev(), rev);
+    }
+
+    private ObjectNode createTrainDamageReportDocument() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.valueToTree(trainDamageReport);
     }
 
     private void createTrainDamageReport() {

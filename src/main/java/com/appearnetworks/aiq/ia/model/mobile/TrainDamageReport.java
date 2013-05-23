@@ -15,6 +15,9 @@ public class TrainDamageReport extends AIQDocument {
     private String reportedBy;
     private Date damageDateTime;
 
+    public TrainDamageReport() {
+    }
+
     public TrainDamageReport(String _id,
                              long _rev,
                              String trainId,
