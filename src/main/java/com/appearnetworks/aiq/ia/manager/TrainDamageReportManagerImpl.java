@@ -64,7 +64,7 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
     }
 
     private TrainDamageReport convertToTrainDamageReport(TrainDamageReportDO trainDamageReportDO) {
-        return new TrainDamageReport(trainDamageReportDO.getId(),
+        return new TrainDamageReport(TrainDamageReport.DOC_ID_PREFIX + trainDamageReportDO.getId(),
                 trainDamageReportDO.getRev(),
                 trainDamageReportDO.getTrain().getId(),
                 trainDamageReportDO.getDescription(),

@@ -9,7 +9,7 @@ import java.util.Date;
 public class TrainDamageReport extends AIQDocument {
 
     public static final String DOC_TYPE = "TD.TrainDamageReport";
-    public static final String DOC_ID_PREFIX = "_TrainDamageReport_";
+    public static final String DOC_ID_PREFIX = DOC_TYPE + "_";
 
     private String trainId;
     private String description;

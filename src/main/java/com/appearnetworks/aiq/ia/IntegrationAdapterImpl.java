@@ -127,7 +127,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         List<DocumentReference> documentReferences = new ArrayList<>();
 
         for (TrainDamageReport damageReport : trainDamageReports) {
-            documentReferences.add(new DocumentReference(TrainDamageReport.DOC_ID_PREFIX + damageReport.get_id(),
+            documentReferences.add(new DocumentReference(damageReport.get_id(),
                     TrainDamageReport.DOC_TYPE,
                     damageReport.get_rev()));
         }
@@ -140,7 +140,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         List<DocumentReference> documentReferenceList = new ArrayList<>();
 
         for (Train train : trains) {
-            documentReferenceList.add(new DocumentReference(Train.DOC_ID_PREFIX + train.get_id(),
+            documentReferenceList.add(new DocumentReference(train.get_id(),
                     Train.DOC_TYPE,
                     train.get_rev()));
         }
