@@ -1,7 +1,6 @@
 package com.appearnetworks.aiq.ia.unit;
 
 import com.appearnetworks.aiq.ia.IntegrationAdapterImpl;
-import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
 import com.appearnetworks.aiq.ia.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.manager.TrainManager;
 import com.appearnetworks.aiq.ia.manager.exception.TrainNotFoundException;
@@ -26,9 +25,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class IntegrationAdapterTest {
 
@@ -61,9 +58,9 @@ public class IntegrationAdapterTest {
         when(trainDamageReportManagerMock.getAll()).thenReturn(getSomeTrainDamageReports());
 
         assertArrayEquals(new DocumentReference[]{
-                new DocumentReference(Train.DOC_ID_PREFIX + train1.get_id(), Train.DOC_TYPE, 1L),
-                new DocumentReference(Train.DOC_ID_PREFIX + train2.get_id(), Train.DOC_TYPE, 1L),
-                new DocumentReference(TrainDamageReport.DOC_ID_PREFIX + trainDamageReport.get_id(), TrainDamageReport.DOC_TYPE, 1L),
+                new DocumentReference(train1.get_id(), Train.DOC_TYPE, 1L),
+                new DocumentReference(train2.get_id(), Train.DOC_TYPE, 1L),
+                new DocumentReference(trainDamageReport.get_id(), TrainDamageReport.DOC_TYPE, 1L),
         },
                 integrationAdapter.findByUserAndDevice("user1", "device1").toArray());
     }
