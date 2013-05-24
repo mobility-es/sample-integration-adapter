@@ -5,9 +5,7 @@ package com.appearnetworks.aiq.ia.model.mobile;
  * object to JSON and vice versa.
  */
 public class Train extends AIQDocument {
-
     public static final String DOC_TYPE = "TD.Train";
-    public static final String DOC_ID_PREFIX = DOC_TYPE + "_";
 
     private Long number;
 

@@ -3,8 +3,9 @@ package com.appearnetworks.aiq.ia.manager;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageReportDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
+import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
+import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
 import com.appearnetworks.aiq.ia.manager.exception.TrainDamageReportNotFoundException;
-import com.appearnetworks.aiq.ia.dataaccess.model.*;
 import com.appearnetworks.aiq.ia.manager.exception.TrainNotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class TrainDamageReportManagerImpl implements TrainDamageReportManager {
     }
 
     private TrainDamageReport convertToTrainDamageReport(TrainDamageReportDO trainDamageReportDO) {
-        return new TrainDamageReport(TrainDamageReport.DOC_ID_PREFIX + trainDamageReportDO.getId(),
+        return new TrainDamageReport(trainDamageReportDO.getId(),
                 trainDamageReportDO.getRev(),
                 trainDamageReportDO.getTrain().getId(),
                 trainDamageReportDO.getDescription(),

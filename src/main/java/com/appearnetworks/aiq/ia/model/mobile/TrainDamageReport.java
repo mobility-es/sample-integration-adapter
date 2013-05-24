@@ -1,15 +1,16 @@
 package com.appearnetworks.aiq.ia.model.mobile;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.Date;
 
 /**
  * This object represent train data and acts as the data transfer object in the system. Jackson is used to convert this
  * object to JSON and vice versa.
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class TrainDamageReport extends AIQDocument {
-
     public static final String DOC_TYPE = "TD.DamageReport";
-    public static final String DOC_ID_PREFIX = DOC_TYPE + "_";
 
     private String trainId;
     private String description;
@@ -37,6 +38,10 @@ public class TrainDamageReport extends AIQDocument {
 
     public String getTrainId() {
         return trainId;
+    }
+
+    public void setTrainId(String trainId) {
+        this.trainId = trainId;
     }
 
     public String getDescription() {

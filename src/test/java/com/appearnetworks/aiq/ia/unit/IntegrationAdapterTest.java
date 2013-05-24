@@ -69,7 +69,7 @@ public class IntegrationAdapterTest {
     public void retrieveDocument() throws TrainNotFoundException, IOException {
         when(trainManagerMock.find(train1.get_id())).thenReturn(train1);
 
-        ObjectNode objectNode = integrationAdapter.retrieveDocument(Train.DOC_TYPE, Train.DOC_ID_PREFIX + train1.get_id());
+        ObjectNode objectNode = integrationAdapter.retrieveDocument(Train.DOC_TYPE, train1.get_id());
         assertNotNull(objectNode);
 
         ObjectMapper mapper = new ObjectMapper();

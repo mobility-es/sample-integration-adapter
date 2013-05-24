@@ -47,7 +47,7 @@ public class TrainManagerImpl implements TrainManager {
     }
 
     private Train convertToTrain(TrainDO trainDO) {
-        String id = Train.DOC_ID_PREFIX + trainDO.getId();
+        String id = trainDO.getId();
         long rev = trainDO.getRev();
         long number = trainDO.getNumber();
         return new Train(id, rev, number);

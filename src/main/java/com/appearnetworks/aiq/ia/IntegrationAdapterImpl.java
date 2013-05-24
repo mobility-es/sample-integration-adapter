@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Component
 public class IntegrationAdapterImpl extends IntegrationAdapterBase {
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ApplicationInitializer.class);
+    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(IntegrationAdapterImpl.class);
 
     @Autowired
     private TrainManager trainManager;
@@ -106,7 +106,6 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
     @Override
     public long insertDocument(String userId, String deviceId, DocumentReference docRef, ObjectNode doc) throws UpdateException {
         ObjectMapper mapper = new ObjectMapper();
-
         switch (docRef._type){
             case TrainDamageReport.DOC_TYPE:
                 TrainDamageReport trainDamageReport;
@@ -150,7 +149,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
 
     private ObjectNode fetchTrainDamageReportDocument(String docId) {
         try {
-            TrainDamageReport trainDamageReport = trainDamageReportManager.find(docId.substring(TrainDamageReport.DOC_ID_PREFIX.length()));
+            TrainDamageReport trainDamageReport = trainDamageReportManager.find(docId);
             ObjectMapper mapper = new ObjectMapper();
 
             return mapper.valueToTree(trainDamageReport);
@@ -163,7 +162,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
 
     private ObjectNode fetchTrainDocument(String docId){
         try {
-            Train train = trainManager.find(docId.substring(Train.DOC_ID_PREFIX.length()));
+            Train train = trainManager.find(docId);
             ObjectMapper mapper = new ObjectMapper();
 
             return mapper.valueToTree(train);
