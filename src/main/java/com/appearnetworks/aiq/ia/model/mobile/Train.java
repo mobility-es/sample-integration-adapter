@@ -1,5 +1,7 @@
 package com.appearnetworks.aiq.ia.model.mobile;
 
+import com.appearnetworks.aiq.integrationframework.integration.AIQDocument;
+
 /**
  * This object represent train data and acts as the data transfer object in the system. Jackson is used to convert this
  * object to JSON and vice versa.

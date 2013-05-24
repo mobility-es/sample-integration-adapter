@@ -1,5 +1,6 @@
 package com.appearnetworks.aiq.ia.model.mobile;
 
+import com.appearnetworks.aiq.integrationframework.integration.AIQDocument;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.util.Date;
