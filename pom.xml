@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
         <spring.version>3.2.2.RELEASE</spring.version>
         <logback.version>1.0.13</logback.version>
+        <jackson.version>1.9.12</jackson.version>
     </properties>
 
     <repositories>
@@ -32,11 +33,6 @@
             <name>Snapshots</name>
             <url>http://repo.appearnetworks.com:8081/nexus/content/repositories/snapshots</url>
             <layout>default</layout>
-        </repository>
-        <repository>
-            <id>repository.springframework.maven.release</id>
-            <name>Spring Framework Maven Release Repository</name>
-            <url>http://maven.springframework.org/release</url>
         </repository>
     </repositories>
 
@@ -66,16 +62,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
@@ -88,6 +74,18 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <!--Jackson-->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- Test frameworks -->
