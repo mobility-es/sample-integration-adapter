@@ -2,9 +2,9 @@ package com.appearnetworks.aiq.ia.manager;
 
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
-import com.appearnetworks.aiq.ia.dataaccess.model.*;
-import com.appearnetworks.aiq.ia.manager.exception.TrainNotFoundException;
-import com.appearnetworks.aiq.ia.model.mobile.*;
+import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
+import com.appearnetworks.aiq.ia.manager.exception.NotFoundException;
+import com.appearnetworks.aiq.ia.model.mobile.Train;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author Qambber Hussain, Appear Networks.
- */
+
 @Component
 public class TrainManagerImpl implements TrainManager {
 
@@ -22,12 +20,12 @@ public class TrainManagerImpl implements TrainManager {
     private TrainDao trainDao;
 
     @Override
-    public Train find(String id) throws TrainNotFoundException {
+    public Train find(String id) throws NotFoundException {
         try {
             TrainDO trainDO = trainDao.find(id);
             return convertToTrain(trainDO);
         } catch (NoSuchDataObjectException e) {
-            throw new TrainNotFoundException("No train with id [" + id + "] exists.");
+            throw new NotFoundException("No train with id [" + id + "] exists.");
         }
     }
 

@@ -7,19 +7,19 @@ package com.appearnetworks.aiq.ia.model.mobile;
 public class Train extends AIQDocument {
     public static final String DOC_TYPE = "TD.Train";
 
-    private Long number;
+    private long number;
 
     /**
      * Needed for Jackson de-serialization
      */
     public Train() {}
 
-    public Train(String _id, long _rev, Long number) {
+    public Train(String _id, long _rev, long number) {
         super(_id, _rev, DOC_TYPE);
         this.number = number;
     }
 
-    public Long getNumber() {
+    public long getNumber() {
         return number;
     }
 }

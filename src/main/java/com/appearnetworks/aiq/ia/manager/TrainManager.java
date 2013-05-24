@@ -1,7 +1,6 @@
 package com.appearnetworks.aiq.ia.manager;
 
-import com.appearnetworks.aiq.ia.dataaccess.exception.NoSuchDataObjectException;
-import com.appearnetworks.aiq.ia.manager.exception.TrainNotFoundException;
+import com.appearnetworks.aiq.ia.manager.exception.NotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 
 import java.util.List;
@@ -18,9 +17,9 @@ public interface TrainManager {
      *
      * @param id the id of the train.
      * @return the train damage report.
-     * @throws TrainNotFoundException thrown if no train damage report exists for the supplied ID.
+     * @throws NotFoundException thrown if no train damage report exists for the supplied ID.
      */
-    Train find(String id) throws TrainNotFoundException;
+    Train find(String id) throws NotFoundException;
 
     /**
      * Uses the underlying data access object to get all trains.

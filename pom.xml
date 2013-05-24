@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.appearnetworks.aiq.ia</groupId>
+    <groupId>com.appearnetworks.aiq</groupId>
     <artifactId>sample-integration-adapter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -152,6 +152,9 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.0.3.v20130506</version>
                 <configuration>
+                    <httpConnector>
+                        <port>8088</port>
+                    </httpConnector>
                     <contextPath>/</contextPath>
                 </configuration>
             </plugin>

@@ -3,7 +3,7 @@ package com.appearnetworks.aiq.ia.unit;
 import com.appearnetworks.aiq.ia.IntegrationAdapterImpl;
 import com.appearnetworks.aiq.ia.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.manager.TrainManager;
-import com.appearnetworks.aiq.ia.manager.exception.TrainNotFoundException;
+import com.appearnetworks.aiq.ia.manager.exception.NotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
@@ -66,7 +66,7 @@ public class IntegrationAdapterTest {
     }
 
     @Test
-    public void retrieveDocument() throws TrainNotFoundException, IOException {
+    public void retrieveDocument() throws NotFoundException, IOException {
         when(trainManagerMock.find(train1.get_id())).thenReturn(train1);
 
         ObjectNode objectNode = integrationAdapter.retrieveDocument(Train.DOC_TYPE, train1.get_id());

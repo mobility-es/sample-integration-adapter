@@ -4,7 +4,7 @@ import java.util.UUID;
 
 
 public class DataObject {
-    private String id;
+    private final String id;
     public DataObject() {
         this.id = UUID.randomUUID().toString();
     }

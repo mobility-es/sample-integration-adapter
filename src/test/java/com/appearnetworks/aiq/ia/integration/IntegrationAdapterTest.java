@@ -54,7 +54,7 @@ public class IntegrationAdapterTest {
         Train train = new ObjectMapper().readValue(integrationAdapter.retrieveDocument(Train.DOC_TYPE, documentReference._id),
                                                    Train.class);
         assertNotNull(train);
-        assertEquals(train.getNumber(), testTrainDO.getNumber());
+        assertTrue(train.getNumber() == testTrainDO.getNumber());
     }
 
     @DirtiesContext

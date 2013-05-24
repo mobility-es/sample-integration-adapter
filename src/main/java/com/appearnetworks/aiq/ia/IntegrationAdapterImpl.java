@@ -2,8 +2,7 @@ package com.appearnetworks.aiq.ia;
 
 import com.appearnetworks.aiq.ia.manager.TrainDamageReportManager;
 import com.appearnetworks.aiq.ia.manager.TrainManager;
-import com.appearnetworks.aiq.ia.manager.exception.TrainDamageReportNotFoundException;
-import com.appearnetworks.aiq.ia.manager.exception.TrainNotFoundException;
+import com.appearnetworks.aiq.ia.manager.exception.NotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
@@ -54,20 +53,15 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
      * calls to this method.
      *
      * @param userId the userId of the AIQ Platform user.
-     * @param deviceId the deviceId of the AIQ Platform user.
+     * @param deviceId the deviceId of the device that created the document.
      * @return a list of document references.
      */
     @Override
     public List<DocumentReference> findByUserAndDevice(String userId, String deviceId) {
         List<DocumentReference> documentReferences = new ArrayList<>();
 
-        try {
-            documentReferences.addAll(fetchAllTrains());
-            documentReferences.addAll(fetchAllTrainDamageReports());
-        } catch (Exception e){
-            LOG.warn("Unexpected exception when retrieving documents", e);
-            throw e;
-        }
+        documentReferences.addAll(fetchAllTrains());
+        documentReferences.addAll(fetchAllTrainDamageReports());
 
         return documentReferences;
     }
@@ -153,7 +147,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
             ObjectMapper mapper = new ObjectMapper();
 
             return mapper.valueToTree(trainDamageReport);
-        } catch (TrainDamageReportNotFoundException e) {
+        } catch (NotFoundException e) {
             LOG.warn(e.toString());
         }
 
@@ -166,7 +160,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
             ObjectMapper mapper = new ObjectMapper();
 
             return mapper.valueToTree(train);
-        } catch (TrainNotFoundException e) {
+        } catch (NotFoundException e) {
             LOG.warn(e.toString());
         }
 
