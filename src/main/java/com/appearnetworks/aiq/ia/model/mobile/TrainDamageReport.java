@@ -1,6 +1,6 @@
 package com.appearnetworks.aiq.ia.model.mobile;
 
-import com.appearnetworks.aiq.integrationframework.integration.AIQDocument;
+import com.appearnetworks.aiq.integrationframework.integration.BusinessDocument;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
  * object to JSON and vice versa.
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class TrainDamageReport extends AIQDocument {
+public class TrainDamageReport extends BusinessDocument {
     public static final String DOC_TYPE = "TD.DamageReport";
 
     private String trainId;
@@ -30,7 +30,7 @@ public class TrainDamageReport extends AIQDocument {
                              String reportedBy,
                              Date creationDateTime) {
 
-        super(_id, _rev, DOC_TYPE);
+        super(_id, DOC_TYPE, _rev);
         this.trainId = trainId;
         this.description = description;
         this.reportedBy = reportedBy;
