@@ -50,8 +50,15 @@ public class ApplicationInitializer implements InitializingBean {
             String description = trainDamageDescriptions.get(index);
             trainDamageDao.create(createTrainDamageDo(trainDO, description));
 
-            index = random.nextInt(range) + min;
-            description = trainDamageDescriptions.get(index);
+            boolean unique = false;
+            int secondIndex = 0;
+            while(!unique) {
+                secondIndex = random.nextInt(range) + min;
+                if(secondIndex != index) {
+                    unique = true;
+                }
+            }
+            description = trainDamageDescriptions.get(secondIndex);
             trainDamageDao.create(createTrainDamageDo(trainDO, description));
         }
     }

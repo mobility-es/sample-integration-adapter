@@ -2,26 +2,28 @@ sample-integration-adapter
 ==========================
 
 ### Introduction:
-The sample integration adapter show cases how the AIQ java library can be leveraged to develop an integration adapter.
-It demonstrates how the developers should develop their integration adapters.
+An integration adapter is a project that connects backend systems to the mobile devices through the platform. This
+project is a sample integration adapter created to showcase how the AIQ Java library can be leveraged to develop an
+integration adapter. The project implements the use case of a backend for a simple train damage reporting system with
+the aim to help developers such that they can easily create their own integration adapters.
 
-There are inline comments and java doc explaining the concepts and logic.
+The project should be treated as example code. There are inline comments and java doc explaining the concepts and logic.
 
 ### Features:
-This sample integration adapter supports the train damage application and provides following functionality
+This sample integration adapter supports the train damage application for devices and provides following functionality:
 * Generates a static list of trains.
 * Generates a set of default damage report for each train.
+* Users can list all trains using the train damage application.
 * Users can add new damage reports using the train damage application.
 
-All the data is being stored in memory.
+All the data is being stored in memory and will be reset on restart.
 
 ### Dependencies:
-Sample integration adapter is a maven web project and all dependencies are listed in the pom.xml. The required dependencies would be fetched
-when the project is imported to an IDE or when it is run.
+Sample integration adapter is a maven web project and all dependencies are listed in the pom.xml.
 
 ### Running sample integration adapter:
-To run the sample integration adapter use the following command.
-* `maven jetty:run` will start the jetty server on port 8088
+Sample integration adapter is configured to run in jetty on port 8088. User the following command to run the project:
+* `maven jetty:run`
 
 The jetty http port is configurable in pom.xml
 

@@ -26,8 +26,9 @@ public class TrainDamageReportDO extends DataObject {
     }
 
     /**
-     * To set updated revision value for a <code>TrainDamageReport</code> in case it is updated.
-     * The setter is unused in current implementation since there is no use case that required updateing the revision.
+     * To set a new revision for a <code>TrainDamageReport</code> when required. Revisions are updated when data is
+     * changed and the change is to be reflected on devices through the AIQ platform. The setter is unused in current
+     * implementation since there is no use case that requires updating the revision.
      * @param rev the updated revision
      */
     public void setRev(Long rev) {

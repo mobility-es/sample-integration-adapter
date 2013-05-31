@@ -3,8 +3,7 @@ package com.appearnetworks.aiq.ia.dataaccess.model;
 import java.util.UUID;
 
 /**
- * Base class for all the data objects, generates a UUID for each data object which is the primary key
- * for that data objects.
+ * Base class for all the data objects. It generates a UUID for each data object which acts as a primary key.
  */
 public abstract class DataObject {
     private final String id;
