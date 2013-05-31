@@ -29,7 +29,7 @@
             </snapshots>
             <id>AppearSnapshots</id>
             <name>Appear Snapshots</name>
-            <url>http://repo.appearnetworks.com:8081/nexus/content/repositories/snapshots</url>
+            <url>https://repo.appeariq.com/nexus/content/repositories/snapshots</url>
             <layout>default</layout>
         </repository>
         <repository>
@@ -43,7 +43,7 @@
             </snapshots>
             <id>AppearReleases</id>
             <name>Appear Releases</name>
-            <url>http://repo.appearnetworks.com:8081/nexus/content/repositories/releases</url>
+            <url>https://repo.appeariq.com/nexus/content/repositories/releases</url>
             <layout>default</layout>
         </repository>
     </repositories>
