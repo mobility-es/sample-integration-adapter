@@ -47,7 +47,7 @@ public class IntegrationAdapterTest {
     }
 
     @Test
-    public void retrieveAddedTrainDocument() throws IOException {
+    public void whenTrainDocumentExistThenItCanBeRetrieved() throws IOException {
         List<DocumentReference> documentReferences = integrationAdapter.findByUserAndDevice("userId", "DeviceId");
         assertFalse(documentReferences.isEmpty());
         assertTrue(documentReferences.size() == 1);
@@ -63,7 +63,7 @@ public class IntegrationAdapterTest {
 
     @DirtiesContext
     @Test
-    public void addAndGetTrainDamageReport() throws UpdateException, IOException {
+    public void whenTrainDamageReportIsAddedThenItCanBeRetrieved() throws UpdateException, IOException {
         integrationAdapter.insertDocument("UserId",
                 "DeviceId",
                 new DocumentReference("", TrainDamageReport.DOC_TYPE, 0L),

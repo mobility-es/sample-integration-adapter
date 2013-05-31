@@ -15,7 +15,10 @@
     <!--enable annotation driven spring mvc-->
     <mvc:annotation-driven/>
 
+    <!--Path to the test properties file-->
+    <context:property-placeholder location="/META-INF/test.properties" />
 
+    <!--Used for json serialization & de-serialization-->
     <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
         <property name="supportedMediaTypes" value="application/json"/>
     </bean>
@@ -27,7 +30,5 @@
             </list>
         </property>
     </bean>
-
-    <context:property-placeholder location="/META-INF/test.properties" />
 
 </beans>

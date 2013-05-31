@@ -7,12 +7,23 @@
    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
+    <!-- enabling annotation driven configuration /-->
     <context:annotation-config/>
     <context:component-scan base-package="com.appearnetworks.aiq.integrationframework,com.appearnetworks.aiq.ia"/>
 
+
+    <!-- JSR-303 support will be detected on classpath and enabled automatically -->
+    <!--enable annotation driven spring mvc-->
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
 
+    <!--Path to the properties file-->
+    <context:property-placeholder location="classpath:aiq.properties" />
+
+    <!--Used to generate sample data after bean creation-->
+    <bean class="com.appearnetworks.aiq.ia.ApplicationInitializer"/>
+
+    <!--Used for json serialization & de-serialization-->
     <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
         <property name="supportedMediaTypes" value="application/json"/>
     </bean>
@@ -24,9 +35,5 @@
             </list>
         </property>
     </bean>
-
-    <context:property-placeholder location="classpath:aiq.properties" />
-
-    <bean class="com.appearnetworks.aiq.ia.ApplicationInitializer"/>
 
 </beans>

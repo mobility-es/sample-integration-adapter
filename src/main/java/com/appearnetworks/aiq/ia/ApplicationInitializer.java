@@ -41,8 +41,8 @@ public class ApplicationInitializer implements InitializingBean {
             TrainDamageReportDO trainDamageReportDO = new TrainDamageReportDO();
 
             trainDamageReportDO.setCreationDateTime(new Date());
-            trainDamageReportDO.setDescription("Should be fixed");
-            trainDamageReportDO.setReportedBy("Alex");
+            trainDamageReportDO.setDescription("Part number 9507 maintenance.");
+            trainDamageReportDO.setReportedBy("Alex Schulman");
             trainDamageReportDO.setTrain(trainDO);
 
             trainDamageDao.create(trainDamageReportDO);
@@ -50,18 +50,17 @@ public class ApplicationInitializer implements InitializingBean {
     }
 
     private void createTrains() {
-
         //Create trains
-        trainDao.create(new TrainDO(1L));
-        trainDao.create(new TrainDO(2L));
-        trainDao.create(new TrainDO(3L));
-        trainDao.create(new TrainDO(4L));
-        trainDao.create(new TrainDO(5L));
-        trainDao.create(new TrainDO(6L));
-        trainDao.create(new TrainDO(7L));
-        trainDao.create(new TrainDO(8L));
-        trainDao.create(new TrainDO(9L));
-        trainDao.create(new TrainDO(10L));
+        trainDao.create(new TrainDO(9001L));
+        trainDao.create(new TrainDO(9002L));
+        trainDao.create(new TrainDO(9003L));
+        trainDao.create(new TrainDO(9005L));
+        trainDao.create(new TrainDO(9006L));
+        trainDao.create(new TrainDO(9007L));
+        trainDao.create(new TrainDO(9008L));
+        trainDao.create(new TrainDO(9010L));
+        trainDao.create(new TrainDO(9011L));
+        trainDao.create(new TrainDO(9012L));
     }
 
 

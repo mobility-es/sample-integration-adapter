@@ -71,7 +71,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
      * knows the docType and docId of documents due to the call to #findByUserAndDevices().
      *
      * @param docType the document type of the document to be retrieved.
-     * @param docId the id of the docment to be retrieved.
+     * @param docId the id of the document to be retrieved.
      * @return the actual document as ObjectNode.
      */
     @Override

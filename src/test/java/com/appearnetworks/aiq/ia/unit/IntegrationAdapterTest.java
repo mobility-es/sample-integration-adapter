@@ -53,7 +53,7 @@ public class IntegrationAdapterTest {
     }
 
     @Test
-    public void listDocuments() {
+    public void whenDocumentsExistThenTheyCanBeListed() {
         when(trainManagerMock.getAll()).thenReturn(getSomeTrains());
         when(trainDamageReportManagerMock.getAll()).thenReturn(getSomeTrainDamageReports());
 
@@ -66,7 +66,7 @@ public class IntegrationAdapterTest {
     }
 
     @Test
-    public void retrieveDocument() throws NotFoundException, IOException {
+    public void whenDocumentExistThenItCanBeRetrieved() throws NotFoundException, IOException {
         when(trainManagerMock.find(train1.get_id())).thenReturn(train1);
 
         ObjectNode objectNode = integrationAdapter.retrieveDocument(Train.DOC_TYPE, train1.get_id());
@@ -81,7 +81,7 @@ public class IntegrationAdapterTest {
     }
 
     @Test
-    public void insertDocument() throws UpdateException {
+    public void whenDocumentIsInsertedThenCreateOperationIsInvoked() throws UpdateException {
 
         when(trainDamageReportManagerMock.create(any(TrainDamageReport.class))).thenReturn(trainDamageReport);
 
