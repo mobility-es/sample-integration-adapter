@@ -215,9 +215,9 @@
                 <artifactId>integration-maven-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <configuration>
-                    <url>https://dev.appeariq.com/ia-upload/</url>
+                    <url>https://dev.appeariq.com/supervisor/integration</url>
                     <file>${project.war}</file>
-                    <org>sample</org>
+                    <org>test</org>
                 </configuration>
             </plugin>
         </plugins>
