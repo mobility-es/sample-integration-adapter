@@ -17,49 +17,9 @@
         <jackson.version>1.9.12</jackson.version>
 
         <project.war>${project.basedir}/target/${project.build.finalName}.war</project.war>
-
-        <ia.upload.org>test</ia.upload.org>
-        <ia.upload.url>http://localhost:8080/ia-upload/upload?org=${ia.upload.org}</ia.upload.url>
-
+        <aiq.property.file>${project.basedir}/src/main/resources/aiq.properties</aiq.property.file>
+        <aiq.integration.supervisor>https://dev.appeariq.com/supervisor/integration</aiq.integration.supervisor>
     </properties>
-    <profiles>
-        <profile>
-            <properties>
-                <project.war>${project.basedir}/target/${project.build.finalName}.war</project.war>
-            </properties>
-            <id>upload</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <configuration>
-                                    <tasks>
-                                        <echo message="test ,,,, ${project.war}"/>
-                                        <exec executable="curl" failonerror="true">
-                                            <arg value="--fail" />
-                                            <arg value="-v" />
-                                            <arg value="-X" />
-                                            <arg value="POST" />
-                                            <arg value="-F" />
-                                            <arg value="file=@${project.war}" />
-                                            <arg value="${ia.upload.url}" />
-                                        </exec>
-                                    </tasks>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
     <repositories>
         <repository>
             <releases>
@@ -201,6 +161,27 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <files>
+                        <file>${aiq.property.file}</file>
+                    </files>
+                    <outputFile/>
+                    <properties/>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.0.3.v20130506</version>
@@ -215,9 +196,9 @@
                 <artifactId>integration-maven-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <configuration>
-                    <url>https://dev.appeariq.com/supervisor/integration</url>
+                    <url>${aiq.integration.supervisor}}</url>
                     <file>${project.war}</file>
-                    <org>test</org>
+                    <org>${aiq.orgname}</org>
                 </configuration>
             </plugin>
         </plugins>
