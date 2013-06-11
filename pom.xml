@@ -161,27 +161,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0-alpha-2</version>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <files>
-                        <file>${aiq.property.file}</file>
-                    </files>
-                    <outputFile/>
-                    <properties/>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.0.3.v20130506</version>
@@ -194,11 +173,11 @@
             <plugin>
                 <groupId>com.appearnetworks.aiq</groupId>
                 <artifactId>integration-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0</version>
                 <configuration>
-                    <url>${aiq.integration.supervisor}}</url>
+                    <url>${aiq.integration.supervisor}</url>
                     <file>${project.war}</file>
-                    <org>${aiq.orgname}</org>
+                    <propertiesPath>${aiq.property.file}</propertiesPath>
                 </configuration>
             </plugin>
         </plugins>
