@@ -50,7 +50,36 @@
             <layout>default</layout>
         </repository>
     </repositories>
-
+    <pluginRepositories>
+        <pluginRepository>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+            <id>AppearSnapshots</id>
+            <name>Appear Snapshots</name>
+            <url>https://repo.appeariq.com/nexus/content/repositories/snapshots</url>
+            <layout>default</layout>
+        </pluginRepository>
+        <pluginRepository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>AppearReleases</id>
+            <name>Appear Releases</name>
+            <url>https://repo.appeariq.com/nexus/content/repositories/releases</url>
+            <layout>default</layout>
+        </pluginRepository>
+    </pluginRepositories>
     <dependencies>
         <!-- AIQ8 integration framework -->
         <dependency>
@@ -181,6 +210,8 @@
                 </configuration>
             </plugin>
         </plugins>
+
+
     </build>
 
 </project>
