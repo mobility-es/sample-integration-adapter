@@ -55,8 +55,8 @@ public class IntegrationAdapterTest {
         DocumentReference documentReference = documentReferences.get(0);
         assertEquals(Train.DOC_TYPE, documentReference._type);
 
-        Train train = new ObjectMapper().readValue(integrationAdapter.retrieveDocument(Train.DOC_TYPE, documentReference._id),
-                                                   Train.class);
+        Train train = (Train)integrationAdapter.retrieveDocument(Train.DOC_TYPE, documentReference._id);
+
         assertNotNull(train);
         assertTrue(train.getNumber() == testTrainDO.getNumber());
     }
@@ -74,10 +74,7 @@ public class IntegrationAdapterTest {
         List<DocumentReference> documentReferences = integrationAdapter.findByUserAndDevice("userId", "deviceId");
         for (DocumentReference documentReference : documentReferences) {
             if(documentReference._type.equals(TrainDamageReport.DOC_TYPE)) {
-                trainDamageReports.add(new ObjectMapper().readValue(
-                        integrationAdapter.retrieveDocument(documentReference._type, documentReference._id),
-                        TrainDamageReport.class
-                ));
+                trainDamageReports.add((TrainDamageReport)integrationAdapter.retrieveDocument(documentReference._type, documentReference._id));
             }
         }
 

@@ -19,14 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An implementation of <code>IntegrationAdapterBase</code>. This class overrides many methods on integration adapter
- * base to provide custom logic as required by the application based on the business domain. All data communication
- * between the devices and the integration adapter takes place through the platform. The platform is configured to
- * reach the integration adapter through this endpoint.
+ * This class overrides many methods on integration adapter base to provide custom logic as required by the application
+ * based on the business domain. All data communication between the devices and the integration adapter takes place
+ * through the platform. The platform is configured to reach the integration adapter through this endpoint.
  *
  * The protocol between the platform and integration adapter is well defined and is used by extending the relevant
  * interfaces.
- *
  */
 @Component
 public class IntegrationAdapterImpl extends IntegrationAdapterBase {
@@ -34,8 +32,11 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
 
     @Autowired
     private TrainManager trainManager;
+
     @Autowired
     private TrainDamageReportManager trainDamageReportManager;
+
+    private ObjectMapper mapper = new ObjectMapper();
 
     /**
      * This method should be implemented for all cases where data is to be pulled from the integration adapter into the
@@ -72,11 +73,11 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
      *
      * @param docType the document type of the document to be retrieved.
      * @param docId the id of the document to be retrieved.
-     * @return the actual document as ObjectNode.
+     * @return the document
      */
     @Override
-    public ObjectNode retrieveDocument(String docType, String docId) {
-        switch (docType){
+    public Object retrieveDocument(String docType, String docId) {
+        switch (docType) {
             case Train.DOC_TYPE:
                 return fetchTrainDocument(docId);
             case TrainDamageReport.DOC_TYPE:
@@ -99,7 +100,6 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
      */
     @Override
     public long insertDocument(String userId, String deviceId, DocumentReference docRef, ObjectNode doc) throws UpdateException {
-        ObjectMapper mapper = new ObjectMapper();
         switch (docRef._type){
             case TrainDamageReport.DOC_TYPE:
                 TrainDamageReport trainDamageReport;
@@ -120,9 +120,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         List<DocumentReference> documentReferences = new ArrayList<>();
 
         for (TrainDamageReport damageReport : trainDamageReports) {
-            documentReferences.add(new DocumentReference(damageReport.get_id(),
-                    TrainDamageReport.DOC_TYPE,
-                    damageReport.get_rev()));
+            documentReferences.add(new DocumentReference(damageReport));
         }
 
         return documentReferences;
@@ -133,20 +131,15 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         List<DocumentReference> documentReferenceList = new ArrayList<>();
 
         for (Train train : trains) {
-            documentReferenceList.add(new DocumentReference(train.get_id(),
-                    Train.DOC_TYPE,
-                    train.get_rev()));
+            documentReferenceList.add(new DocumentReference(train));
         }
 
         return documentReferenceList;
     }
 
-    private ObjectNode fetchTrainDamageReportDocument(String docId) {
+    private TrainDamageReport fetchTrainDamageReportDocument(String docId) {
         try {
-            TrainDamageReport trainDamageReport = trainDamageReportManager.find(docId);
-            ObjectMapper mapper = new ObjectMapper();
-
-            return mapper.valueToTree(trainDamageReport);
+            return trainDamageReportManager.find(docId);
         } catch (NotFoundException e) {
             LOG.warn(e.toString());
         }
@@ -154,12 +147,9 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         return null;
     }
 
-    private ObjectNode fetchTrainDocument(String docId){
+    private Train fetchTrainDocument(String docId) {
         try {
-            Train train = trainManager.find(docId);
-            ObjectMapper mapper = new ObjectMapper();
-
-            return mapper.valueToTree(train);
+            return trainManager.find(docId);
         } catch (NotFoundException e) {
             LOG.warn(e.toString());
         }

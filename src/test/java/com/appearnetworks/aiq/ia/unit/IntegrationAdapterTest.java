@@ -69,11 +69,10 @@ public class IntegrationAdapterTest {
     public void whenDocumentExistThenItCanBeRetrieved() throws NotFoundException, IOException {
         when(trainManagerMock.find(train1.get_id())).thenReturn(train1);
 
-        ObjectNode objectNode = integrationAdapter.retrieveDocument(Train.DOC_TYPE, train1.get_id());
-        assertNotNull(objectNode);
+        Object object = integrationAdapter.retrieveDocument(Train.DOC_TYPE, train1.get_id());
+        assertNotNull(object);
 
-        ObjectMapper mapper = new ObjectMapper();
-        Train train = mapper.readValue(objectNode, Train.class);
+        Train train = (Train)object;
 
         assertEquals(train1.get_id(), train.get_id());
         assertEquals(train1.getNumber(), train.getNumber());
