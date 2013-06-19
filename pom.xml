@@ -195,7 +195,7 @@
                 <version>9.0.3.v20130506</version>
                 <configuration>
                     <httpConnector>
-                        <port>8088</port>
+                        <port>9090</port>
                     </httpConnector>
                 </configuration>
             </plugin>
