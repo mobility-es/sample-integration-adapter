@@ -5,9 +5,7 @@ import com.appearnetworks.aiq.ia.manager.TrainManager;
 import com.appearnetworks.aiq.ia.manager.exception.NotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
-import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
-import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapterBase;
-import com.appearnetworks.aiq.integrationframework.integration.UpdateException;
+import com.appearnetworks.aiq.integrationframework.integration.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.LoggerFactory;
@@ -113,6 +111,15 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
             default:
                 return super.insertDocument(userId, deviceId, docRef, doc);
         }
+    }
+
+    @Override
+    public COMessageResponse processMessage(String destination, COMessage message) throws UnavailableException {
+        ObjectNode response = mapper.createObjectNode();
+        response.put("status", "OK");
+
+        LOG.info("CO message to " + destination + ": " + message.toString());
+        return new COMessageResponse(true, response, 0, false, null, false, false);
     }
 
     private List<DocumentReference> fetchAllTrainDamageReports() {
