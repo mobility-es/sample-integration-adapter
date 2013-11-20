@@ -115,11 +115,26 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
 
     @Override
     public COMessageResponse processMessage(String destination, COMessage message) throws UnavailableException {
-        ObjectNode response = mapper.createObjectNode();
-        response.put("status", "OK");
-
         LOG.info("CO message to " + destination + ": " + message.toString());
-        return new COMessageResponse(true, response, 0, false, null, false, false);
+
+        ObjectNode response = mapper.createObjectNode();
+
+        switch (destination) {
+            case "normal":
+                response.put("status", "normal");
+                return new COMessageResponse(true, response, 0, false, null, false, false);
+
+            case "urgent":
+                response.put("status", "urgent");
+                return new COMessageResponse(true, response, 0, true, null, false, false);
+
+            case "notification":
+                response.put("status", "notification");
+                return new COMessageResponse(true, response, 0, true, "CO message response", true, true);
+
+            default:
+                return super.processMessage(destination, message);
+        }
     }
 
     private List<DocumentReference> fetchAllTrainDamageReports() {
