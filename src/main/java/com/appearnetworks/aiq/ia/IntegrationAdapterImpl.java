@@ -131,9 +131,12 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         ObjectNode response = mapper.createObjectNode();
 
         switch (destination) {
-            case "normal":
-                response.put("status", "normal");
+            case "success":
+                response.put("status", "success");
                 return new COMessageResponse(true, response, 0, false, null, false, false);
+
+            case "failure":
+                return new COMessageResponse(false, null, 0, false, null, false, false);
 
             default:
                 return super.processMessage(destination, message, attachments);
