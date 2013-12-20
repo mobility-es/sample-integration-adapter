@@ -5,15 +5,18 @@ import com.appearnetworks.aiq.ia.manager.TrainManager;
 import com.appearnetworks.aiq.ia.manager.exception.NotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
-import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
-import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapterBase;
-import com.appearnetworks.aiq.integrationframework.integration.UpdateException;
+import com.appearnetworks.aiq.integrationframework.integration.*;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +115,31 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
 
             default:
                 return super.insertDocument(userId, deviceId, docRef, doc);
+        }
+    }
+
+    @Override
+    public COMessageResponse processMessage(String destination, COMessage message, FileItemIterator attachments)
+            throws UnavailableException, IOException, FileUploadException {
+        LOG.info("CO message to " + destination + ": " + message.toString());
+        while (attachments.hasNext()) {
+            FileItemStream attachment = attachments.next();
+            LOG.info("with attachment " + attachment.getFieldName() + " of type " + attachment.getContentType());
+            FileUtils.copyInputStreamToFile(attachment.openStream(), File.createTempFile("attachment", "name"));
+        }
+
+        ObjectNode response = mapper.createObjectNode();
+
+        switch (destination) {
+            case "success":
+                response.put("status", "success");
+                return new COMessageResponse(true, response, 0, false, null, false, false);
+
+            case "failure":
+                return new COMessageResponse(false, null, 0, false, null, false, false);
+
+            default:
+                return super.processMessage(destination, message, attachments);
         }
     }
 
