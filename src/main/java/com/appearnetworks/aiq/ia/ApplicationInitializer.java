@@ -5,13 +5,16 @@ import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
 import com.appearnetworks.aiq.integrationframework.platform.*;
+import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -80,7 +83,7 @@ public class ApplicationInitializer implements InitializingBean {
         trainDao.create(new TrainDO(9007L));
     }
 
-    private void sendMessages() {
+    private void sendMessages() throws IOException {
         PlatformUser user = platformService.fetchUsers().get(0);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -97,6 +100,11 @@ public class ApplicationInitializer implements InitializingBean {
         String messageId2 = platformService.createBackendMessage(new BackendMessage("News", new Date(), 3600, false, null, payload,
                 new BackendMessageRecipients(null, Arrays.asList(distributionList)), null));
         LOG.info("Sent message: " + messageId2);
+
+        String messageId3 = platformService.createBackendMessage(new BackendMessage("News", new Date(), 3600, false, null, payload, null, null),
+                Arrays.asList(new MessageAttachment("logo", MediaType.IMAGE_PNG,
+                        IOUtils.toByteArray(getClass().getResourceAsStream("/logo.png")))));
+        LOG.info("Sent message: " + messageId3);
     }
 
     private TrainDamageReportDO createTrainDamageDo(TrainDO trainDO, String description){
