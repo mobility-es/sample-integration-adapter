@@ -93,18 +93,18 @@ public class ApplicationInitializer implements InitializingBean {
         String messageId1 = platformService.createBackendMessage(new BackendMessage("News", null, 3600, false, null, payload,
                 new BackendMessageRecipients(Arrays.asList(user.get_id()), null),
                 null));
-        LOG.info("Sent message: " + messageId1);
+        LOG.info("Sent message [" + messageId1 + "] to user [" + user.getUsername() + "]");
 
         String distributionList = platformService.createDistributionList(Arrays.asList(user.get_id()));
 
         String messageId2 = platformService.createBackendMessage(new BackendMessage("News", new Date(), 3600, false, null, payload,
                 new BackendMessageRecipients(null, Arrays.asList(distributionList)), null));
-        LOG.info("Sent message: " + messageId2);
+        LOG.info("Sent message [" + messageId2 + "] to user [" + user.getUsername() + "] using distribution list");
 
         String messageId3 = platformService.createBackendMessage(new BackendMessage("News", new Date(), 3600, false, null, payload, null, null),
                 Arrays.asList(new MessageAttachment("logo", MediaType.IMAGE_PNG,
                         IOUtils.toByteArray(getClass().getResourceAsStream("/logo.png")))));
-        LOG.info("Sent message: " + messageId3);
+        LOG.info("Sent message ["+messageId3+"] with image attachment to everyone");
     }
 
     private TrainDamageReportDO createTrainDamageDo(TrainDO trainDO, String description){
