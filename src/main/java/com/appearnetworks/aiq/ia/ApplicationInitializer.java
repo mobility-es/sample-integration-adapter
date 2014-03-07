@@ -4,15 +4,18 @@ import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageReportDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
+import com.appearnetworks.aiq.integrationframework.platform.*;
+import org.apache.commons.io.IOUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.io.IOException;
+import java.util.*;
 
 
 /**
@@ -27,6 +30,8 @@ public class ApplicationInitializer implements InitializingBean {
     @Autowired
     private TrainDamageReportDao trainDamageDao;
 
+    @Autowired
+    private PlatformService platformService;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -34,6 +39,7 @@ public class ApplicationInitializer implements InitializingBean {
 
         createTrains();
         createTrainDamages();
+        sendMessages();
     }
 
     private void createTrainDamages() {
@@ -75,6 +81,30 @@ public class ApplicationInitializer implements InitializingBean {
         trainDao.create(new TrainDO(9005L));
         trainDao.create(new TrainDO(9006L));
         trainDao.create(new TrainDO(9007L));
+    }
+
+    private void sendMessages() throws IOException {
+        PlatformUser user = platformService.fetchUsers().get(0);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode payload = mapper.createObjectNode();
+        payload.put("story", "Upcoming election");
+
+        String messageId1 = platformService.createBackendMessage(new BackendMessage("News", null, 3600, false, null, payload,
+                new BackendMessageRecipients(Arrays.asList(user.get_id()), null),
+                null));
+        LOG.info("Sent message [" + messageId1 + "] to user [" + user.getUsername() + "]");
+
+        String distributionList = platformService.createDistributionList(Arrays.asList(user.get_id()));
+
+        String messageId2 = platformService.createBackendMessage(new BackendMessage("News", new Date(), 3600, false, null, payload,
+                new BackendMessageRecipients(null, Arrays.asList(distributionList)), null));
+        LOG.info("Sent message [" + messageId2 + "] to user [" + user.getUsername() + "] using distribution list");
+
+        String messageId3 = platformService.createBackendMessage(new BackendMessage("News", new Date(), 3600, false, null, payload, null, null),
+                Arrays.asList(new MessageAttachment("logo", MediaType.IMAGE_PNG,
+                        IOUtils.toByteArray(getClass().getResourceAsStream("/logo.png")))));
+        LOG.info("Sent message ["+messageId3+"] with image attachment to everyone");
     }
 
     private TrainDamageReportDO createTrainDamageDo(TrainDO trainDO, String description){
