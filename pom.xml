@@ -17,7 +17,7 @@
         <jackson.version>2.3.3</jackson.version>
 
         <project.war>${project.basedir}/target/${project.build.finalName}.war</project.war>
-        <aiq.property.file>${project.basedir}/src/main/resources/aiq.properties</aiq.property.file>
+        <aiq.property.file>${project.basedir}/src/main/aiq.properties</aiq.property.file>
         <aiq.integration.supervisor>https://dev.appeariq.com/supervisor/integration</aiq.integration.supervisor>
     </properties>
     <repositories>
@@ -202,6 +202,7 @@
                     <httpConnector>
                         <port>8088</port>
                     </httpConnector>
+                    <jettyXml>${project.basedir}/src/main/jetty.xml</jettyXml>
                 </configuration>
             </plugin>
             <plugin>
