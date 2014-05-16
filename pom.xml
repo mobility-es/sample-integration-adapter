@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-        <spring.version>3.2.2.RELEASE</spring.version>
+        <spring.version>4.0.4.RELEASE</spring.version>
         <logback.version>1.0.13</logback.version>
         <jackson.version>2.3.3</jackson.version>
 
@@ -160,8 +160,8 @@
         <!-- servlet api -->
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
 
