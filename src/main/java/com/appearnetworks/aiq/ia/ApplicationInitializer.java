@@ -39,7 +39,11 @@ public class ApplicationInitializer implements InitializingBean {
 
         createTrains();
         createTrainDamages();
-        sendMessages();
+        try {
+            sendMessages();
+        } catch (Exception e) {
+            LOG.warn("Unable to send messages: " + e.toString());
+        }
     }
 
     private void createTrainDamages() {
