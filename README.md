@@ -27,4 +27,5 @@ Sample integration adapter is configured to run in jetty on port 8088. User the 
 
 The jetty http port is configurable in pom.xml
 
-
+### Configuring sample integration adapter:
+Configure connection to platform in file `src/main/aiq.properties`.

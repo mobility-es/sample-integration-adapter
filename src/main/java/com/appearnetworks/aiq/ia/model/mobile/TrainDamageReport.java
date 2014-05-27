@@ -1,7 +1,7 @@
 package com.appearnetworks.aiq.ia.model.mobile;
 
 import com.appearnetworks.aiq.integrationframework.integration.BusinessDocument;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
 

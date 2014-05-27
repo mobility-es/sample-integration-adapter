@@ -22,7 +22,7 @@ import static com.appearnetworks.aiq.integrationframework.impl.ProtocolConstants
  * This means that requests that have the url pattern as specified by the
  * value attribute will be handled by this controller.
  *
- * @see http://docs.spring.io/spring/docs/3.2.2.RELEASE/spring-framework-reference/html/mvc.html#mvc-controller
+ * @link http://docs.spring.io/spring/docs/4.0.4.RELEASE/spring-framework-reference/html/mvc.html#mvc-controller
  */
 @Controller
 @RequestMapping(value = "/aiq/integration/direct")

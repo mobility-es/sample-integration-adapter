@@ -6,12 +6,12 @@ import com.appearnetworks.aiq.ia.manager.exception.NotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
 import com.appearnetworks.aiq.integrationframework.integration.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.io.FileUtils;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -106,11 +106,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         switch (docRef._type){
             case TrainDamageReport.DOC_TYPE:
                 TrainDamageReport trainDamageReport;
-                try {
-                    trainDamageReport = mapper.readValue(doc, TrainDamageReport.class);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                trainDamageReport = mapper.convertValue(doc, TrainDamageReport.class);
                 return trainDamageReportManager.create(trainDamageReport).get_rev();
 
             default:
