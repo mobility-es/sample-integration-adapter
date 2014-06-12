@@ -10,7 +10,7 @@ public class TrainDO extends DataObject {
 
     /**
      * This constructor is used to create a train data object.
-     * The revision is required by the platform integration protocol and is required field for all business documents.
+     * The revision is required by the integration protocol and is required field for all business documents.
      * @param number the train number.
      */
     public TrainDO(Long number) {

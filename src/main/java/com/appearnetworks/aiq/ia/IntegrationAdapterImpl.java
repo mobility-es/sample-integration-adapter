@@ -24,9 +24,9 @@ import java.util.List;
 /**
  * This class overrides many methods on integration adapter base to provide custom logic as required by the application
  * based on the business domain. All data communication between the devices and the integration adapter takes place
- * through the platform. The platform is configured to reach the integration adapter through this endpoint.
+ * through the server. The server is configured to reach the integration adapter through this endpoint.
  *
- * The protocol between the platform and integration adapter is well defined and is used by extending the relevant
+ * The protocol between the server and integration adapter is well defined and is used by extending the relevant
  * interfaces.
  */
 @Component
@@ -45,7 +45,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
      * This method should be implemented for all cases where data is to be pulled from the integration adapter into the
      * devices.
      *
-     * The platform calls this method to get a list of document references of the documents that are to be sent to the
+     * The server calls this method to get a list of document references of the documents that are to be sent to the
      * user. It is left up to the integration adapter to decide which data is to be sent to the users. Different
      * cases can exists e.g.
      *
@@ -55,7 +55,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
      * In this implementation we neglect the userId and return the same set of document references for all
      * calls to this method.
      *
-     * @param userId the userId of the AIQ Platform user.
+     * @param userId the userId of the AIQ server user.
      * @return a list of document references.
      */
     @Override
@@ -69,7 +69,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
     }
 
     /**
-     * This method is called by AIQ platform to get the document corresponding to a docType and docId. The platform
+     * This method is called by AIQ server to get the document corresponding to a docType and docId. The server
      * knows the docType and docId of documents due to the call to #findByUser().
      *
      * @param docType the document type of the document to be retrieved.
@@ -89,7 +89,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
     }
 
     /**
-     * This method is called by AIQ platform to insert a document in the integration adapter.
+     * This method is called by AIQ server to insert a document in the integration adapter.
      *
      * @param userId the userId of the user who created the document.
      * @param deviceId the deviceId of the device that created the document.

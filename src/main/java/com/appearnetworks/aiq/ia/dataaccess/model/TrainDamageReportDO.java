@@ -14,7 +14,7 @@ public class TrainDamageReportDO extends DataObject {
 
     /**
      * This constructor is used to create a new <code>TrainDamageReport</code> data object.
-     * The revision is required by the platform integration protocol and is required field for all business documents.
+     * The revision is required by the integration protocol and is required field for all business documents.
      * The revision for newly create <code>TrainDamageReport</code> should be 1.
      */
     public TrainDamageReportDO() {
@@ -27,7 +27,7 @@ public class TrainDamageReportDO extends DataObject {
 
     /**
      * To set a new revision for a <code>TrainDamageReport</code> when required. Revisions are updated when data is
-     * changed and the change is to be reflected on devices through the AIQ platform. The setter is unused in current
+     * changed and the change is to be reflected on devices through the AIQ server. The setter is unused in current
      * implementation since there is no use case that requires updating the revision.
      * @param rev the updated revision
      */
