@@ -62,7 +62,7 @@ public class IntegrationAdapterTest {
                 new DocumentReference(train2.get_id(), Train.DOC_TYPE, 1L),
                 new DocumentReference(trainDamageReport.get_id(), TrainDamageReport.DOC_TYPE, 1L),
         },
-                integrationAdapter.findByUserAndDevice("user1", "device1").toArray());
+                integrationAdapter.findByUser("user1").toArray());
     }
 
     @Test

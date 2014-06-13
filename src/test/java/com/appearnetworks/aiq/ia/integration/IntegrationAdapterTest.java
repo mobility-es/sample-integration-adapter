@@ -50,7 +50,7 @@ public class IntegrationAdapterTest {
 
     @Test
     public void whenTrainDocumentExistThenItCanBeRetrieved() throws IOException {
-        List<DocumentReference> documentReferences = integrationAdapter.findByUserAndDevice("userId", "DeviceId");
+        List<DocumentReference> documentReferences = integrationAdapter.findByUser("userId");
         assertFalse(documentReferences.isEmpty());
         assertTrue(documentReferences.size() == 1);
 
@@ -73,7 +73,7 @@ public class IntegrationAdapterTest {
 
         List<TrainDamageReport> trainDamageReports = new ArrayList<>();
 
-        List<DocumentReference> documentReferences = integrationAdapter.findByUserAndDevice("userId", "deviceId");
+        List<DocumentReference> documentReferences = integrationAdapter.findByUser("userId");
         for (DocumentReference documentReference : documentReferences) {
             if(documentReference._type.equals(TrainDamageReport.DOC_TYPE)) {
                 trainDamageReports.add((TrainDamageReport)integrationAdapter.retrieveDocument(documentReference._type, documentReference._id));

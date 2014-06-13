@@ -7,7 +7,7 @@
 
     <groupId>com.appearnetworks.aiq</groupId>
     <artifactId>sample-integration-adapter</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.0</version>
     <packaging>war</packaging>
 
     <properties>
@@ -18,7 +18,7 @@
 
         <project.war>${project.basedir}/target/${project.build.finalName}.war</project.war>
         <aiq.property.file>${project.basedir}/src/main/aiq.properties</aiq.property.file>
-        <aiq.integration.supervisor>https://dev.appeariq.com/</aiq.integration.supervisor>
+        <aiq.integration.supervisor>https://qa.appeariq.com/</aiq.integration.supervisor>
     </properties>
     <repositories>
         <repository>
