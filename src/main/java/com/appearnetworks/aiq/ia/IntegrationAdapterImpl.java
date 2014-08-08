@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class overrides many methods on integration adapter base to provide custom logic as required by the application
@@ -138,25 +139,11 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
     }
 
     private List<DocumentReference> fetchAllTrainDamageReports() {
-        List<TrainDamageReport> trainDamageReports = trainDamageReportManager.getAll();
-        List<DocumentReference> documentReferences = new ArrayList<>();
-
-        for (TrainDamageReport damageReport : trainDamageReports) {
-            documentReferences.add(new DocumentReference(damageReport));
-        }
-
-        return documentReferences;
+        return trainDamageReportManager.getAll().stream().map(damageReport -> new DocumentReference(damageReport)).collect(Collectors.toList());
     }
 
     private List<DocumentReference> fetchAllTrains() {
-        List<Train> trains = trainManager.getAll();
-        List<DocumentReference> documentReferenceList = new ArrayList<>();
-
-        for (Train train : trains) {
-            documentReferenceList.add(new DocumentReference(train));
-        }
-
-        return documentReferenceList;
+        return trainManager.getAll().stream().map(train -> new DocumentReference(train)).collect(Collectors.toList());
     }
 
     private TrainDamageReport fetchTrainDamageReportDocument(String docId) {
