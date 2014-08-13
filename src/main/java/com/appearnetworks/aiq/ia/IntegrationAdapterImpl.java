@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -106,6 +107,9 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
                 TrainDamageReport trainDamageReport;
                 trainDamageReport = mapper.convertValue(doc, TrainDamageReport.class);
                 return trainDamageReportManager.create(trainDamageReport).get_rev();
+
+            case Train.DOC_TYPE:
+                throw new UpdateException(HttpStatus.METHOD_NOT_ALLOWED);
 
             default:
                 return super.insertDocument(userId, deviceId, docRef, doc);
