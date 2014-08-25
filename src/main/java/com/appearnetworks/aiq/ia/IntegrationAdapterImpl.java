@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -60,7 +61,7 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
      * @return a list of document references.
      */
     @Override
-    public List<DocumentReference> findByUser(String userId) {
+    public Collection<DocumentReference> findByUser(String userId) {
         List<DocumentReference> documentReferences = new ArrayList<>();
 
         documentReferences.addAll(fetchAllTrains());
