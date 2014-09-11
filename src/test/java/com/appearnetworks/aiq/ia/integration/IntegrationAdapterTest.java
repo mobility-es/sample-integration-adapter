@@ -20,12 +20,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,11 +48,11 @@ public class IntegrationAdapterTest {
 
     @Test
     public void whenTrainDocumentExistThenItCanBeRetrieved() throws IOException {
-        List<DocumentReference> documentReferences = integrationAdapter.findByUser("userId");
+        Collection<DocumentReference> documentReferences = integrationAdapter.findByUser("userId");
         assertFalse(documentReferences.isEmpty());
         assertTrue(documentReferences.size() == 1);
 
-        DocumentReference documentReference = documentReferences.get(0);
+        DocumentReference documentReference = documentReferences.iterator().next();
         assertEquals(Train.DOC_TYPE, documentReference._type);
 
         Train train = (Train)integrationAdapter.retrieveDocument(Train.DOC_TYPE, documentReference._id);
@@ -73,7 +71,7 @@ public class IntegrationAdapterTest {
 
         List<TrainDamageReport> trainDamageReports = new ArrayList<>();
 
-        List<DocumentReference> documentReferences = integrationAdapter.findByUser("userId");
+        Collection<DocumentReference> documentReferences = integrationAdapter.findByUser("userId");
         for (DocumentReference documentReference : documentReferences) {
             if(documentReference._type.equals(TrainDamageReport.DOC_TYPE)) {
                 trainDamageReports.add((TrainDamageReport)integrationAdapter.retrieveDocument(documentReference._type, documentReference._id));
