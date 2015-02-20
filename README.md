@@ -22,20 +22,21 @@ All the data is being stored in memory and will be reset on restart.
 Sample integration adapter is a maven web project and all dependencies are listed in the pom.xml file.
 
 ### Configuring sample integration adapter:
-Enter your organization name, username and password in file `src/main/aiq.properties`.
+Configuration for the integration adapter can be found in file `src/main/aiq.properties`. There you can set the follow
+properties:
+
+| Property               | Description                                         |
+|------------------------|-----------------------------------------------------|
+| `orgname`              | The name of the organization                        |
+| `solution`             | The solution to connect the integration adapter to  |
+| `username`             | The username of a user with integration permission  |
+| `password`             | The password of the above mentioned user            |
+| `integration.url`      | The URL of this integration adapter. If this is set, the integration adapter will automatically register itself on startup |
+| `integration.password` | The password that the AIQ server will use when communicating with the integration adapter. If this is empty a randomly generated password will be used instead. Setting this password is useful for testing the endpoints without using a mobile device and a web app. |
 
 ### Running sample integration adapter locally:
 Sample integration adapter is configured to run in jetty on port 8088. User the following command to run the project:
 * `mvn jetty:run`
-
-### Deploy and start sample integration adapter to Development environment:
-* `mvn aiq:ia.deploy`
-
-### Stop sample integration adapter in Development environment:
-* `mvn aiq:ia.stop`
-
-### Start sample integration adapter in Development environment:
-* `mvn aiq:ia.start`
 
 ### Monitor logs from sample integration adapter in in Development environment:
 * `mvn aiq:ia.logs.tail`
