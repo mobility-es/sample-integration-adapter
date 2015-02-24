@@ -5,7 +5,12 @@ import com.appearnetworks.aiq.ia.manager.TrainManager;
 import com.appearnetworks.aiq.ia.manager.exception.NotFoundException;
 import com.appearnetworks.aiq.ia.model.mobile.Train;
 import com.appearnetworks.aiq.ia.model.mobile.TrainDamageReport;
-import com.appearnetworks.aiq.integrationframework.integration.*;
+import com.appearnetworks.aiq.integrationframework.integration.COMessage;
+import com.appearnetworks.aiq.integrationframework.integration.COMessageResponse;
+import com.appearnetworks.aiq.integrationframework.integration.DocumentReference;
+import com.appearnetworks.aiq.integrationframework.integration.IntegrationAdapterBase;
+import com.appearnetworks.aiq.integrationframework.integration.UnavailableException;
+import com.appearnetworks.aiq.integrationframework.integration.UpdateException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.fileupload.FileItemIterator;
@@ -182,5 +187,20 @@ public class IntegrationAdapterImpl extends IntegrationAdapterBase {
         }
 
         return null;
+    }
+
+    @Override
+    public void createClientSession(String userId, String deviceId, String sessionId, ObjectNode clientSession) {
+        LOG.info("User " + userId + " logged in from device " + deviceId + " with session " + sessionId);
+    }
+
+    @Override
+    public void updateClientSession(String userId, String deviceId, String sessionId, ObjectNode clientSession) {
+        LOG.info("User " + userId + " updated session from device " + deviceId + " with session " + sessionId);
+    }
+
+    @Override
+    public void removeClientSession(String userId, String deviceId, String sessionId) {
+        LOG.info("User " + userId + " logged out from device " + deviceId + " with session " + sessionId);
     }
 }
