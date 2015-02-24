@@ -4,7 +4,11 @@ import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDamageReportDao;
 import com.appearnetworks.aiq.ia.dataaccess.dao.TrainDao;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDO;
 import com.appearnetworks.aiq.ia.dataaccess.model.TrainDamageReportDO;
-import com.appearnetworks.aiq.integrationframework.server.*;
+import com.appearnetworks.aiq.integrationframework.server.BackendMessage;
+import com.appearnetworks.aiq.integrationframework.server.BackendMessageRecipients;
+import com.appearnetworks.aiq.integrationframework.server.IntegrationService;
+import com.appearnetworks.aiq.integrationframework.server.MessageAttachment;
+import com.appearnetworks.aiq.integrationframework.server.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.io.IOUtils;
@@ -15,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -95,20 +102,14 @@ public class ApplicationInitializer implements InitializingBean {
         payload.put("story", "Upcoming election");
 
         String messageId1 = integrationService.createBackendMessage(new BackendMessage("News", null, 3600, false, null, payload,
-                new BackendMessageRecipients(Arrays.asList(user.get_id()), null),
+                new BackendMessageRecipients(Arrays.asList(user.get_id())),
                 null));
         LOG.info("Sent message [" + messageId1 + "] to user [" + user.getUsername() + "]");
 
-        String distributionList = integrationService.createDistributionList(Arrays.asList(user.get_id()));
-
-        String messageId2 = integrationService.createBackendMessage(new BackendMessage("News", new Date(), 3600, false, null, payload,
-                new BackendMessageRecipients(null, Arrays.asList(distributionList)), null));
-        LOG.info("Sent message [" + messageId2 + "] to user [" + user.getUsername() + "] using distribution list");
-
-        String messageId3 = integrationService.createBackendMessage(new BackendMessage("News", new Date(), 3600, false, null, payload, null, null),
+        String messageId2 = integrationService.createBackendMessage(new BackendMessage("News", new Date(), 3600, false, null, payload, null, null),
                 Arrays.asList(new MessageAttachment("logo", MediaType.IMAGE_PNG,
                         IOUtils.toByteArray(getClass().getResourceAsStream("/logo.png")))));
-        LOG.info("Sent message ["+messageId3+"] with image attachment to everyone");
+        LOG.info("Sent message ["+messageId2+"] with image attachment to everyone");
     }
 
     private TrainDamageReportDO createTrainDamageDo(TrainDO trainDO, String description){
